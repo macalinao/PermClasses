@@ -23,6 +23,7 @@
  */
 package net.crimsoncraft.permclasses;
 
+import java.util.logging.Level;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -32,12 +33,12 @@ public class PermClasses extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        super.onDisable();
+        getLogger().log(Level.INFO, "Plugin disabled.");
     }
 
     @Override
     public void onEnable() {
-        super.onEnable();
+        getLogger().log(Level.INFO, "Plugin enabled.");
     }
     
 }
