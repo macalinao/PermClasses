@@ -66,6 +66,25 @@ public class ClassManager {
         }
     }
 
+    /**
+     * Gets a permissions class from its name.
+     * 
+     * @param name The name of the PermClass.
+     * @return The PermClass that corresponds to the name.
+     */
+    public PermClass getClassFromName(String name) {
+        return classes.get(name);
+    }
+
+    /**
+     * Adds a permissions class to this ClassManager. Names are not checked.
+     * 
+     * @param pcl The {@link PermClass} to add.
+     */
+    public void addClass(PermClass pcl) {
+        classes.put(pcl.getName(), pcl);
+    }
+
     public List<ClassType> getClassTypes() {
         throw new UnsupportedOperationException("Not yet implemented");
     }

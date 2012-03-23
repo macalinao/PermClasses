@@ -23,54 +23,49 @@
  */
 package net.crimsoncraft.permclasses;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 /**
- * Represents a permission class.
+ *
+ * @author ianschool
  */
-public class PermClass {
-
-    private String name;
-
-    private ClassType type;
-
-    public PermClass(String name, ClassType type) {
-        this.name = name;
-        this.type = type;
+public class PermClassTest {
+    
+    public PermClassTest() {
     }
 
-    /**
-     * Gets the id of this PermClass.
-     * 
-     * @return This PermClass's id.
-     */
-    public String getId() {
-        return idFromName(getName());
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
     }
     
-    /**
-     * Gets the name of this PermClass.
-     * 
-     * @return The name of this PermClass.
-     */
-    public String getName() {
-        return name;
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
     }
 
-    /**
-     * Gets the type of PermClass this is.
-     * 
-     * @return The type of this PermClass.
-     */
-    public ClassType getType() {
-        return type;
+    @Test
+    public void testIdFromName() {
+        System.out.println("Testing the idFromName method.");
+        
+        String name = "This_is MY clAss_iD";
+        
+        String expected = "this-is-my-class-id";
+        String result = PermClass.idFromName(name);
+        
+        assertEquals(expected, result);
     }
-
-    /**
-     * Gets a class's id from its name.
-     * 
-     * @param name The name of the class.
-     * @return The class id.
-     */
-    public static final String idFromName(String name) {
-        return name.toLowerCase().replace(' ', '-').replace('_', '-');
-    }
+    
 }
