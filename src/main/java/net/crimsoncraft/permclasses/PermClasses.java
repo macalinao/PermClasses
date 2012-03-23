@@ -31,14 +31,29 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class PermClasses extends JavaPlugin {
 
+    private ClassManager classManager;
+
     @Override
     public void onDisable() {
+        getLogger().log(Level.INFO, "PermClasses version " + getDescription().getVersion() + " disabling...");
+        this.classManager = null;
         getLogger().log(Level.INFO, "Plugin disabled.");
     }
 
     @Override
     public void onEnable() {
+        getLogger().log(Level.INFO, "PermClasses version " + getDescription().getVersion() + " loading...");
+        this.classManager = new ClassManager(this);
         getLogger().log(Level.INFO, "Plugin enabled.");
     }
-    
+
+    /**
+     * Gets the plugin's class manager.
+     * 
+     * @return The class manager of the plugin.
+     */
+    public ClassManager getClassManager() {
+        return classManager;
+    }
+
 }
