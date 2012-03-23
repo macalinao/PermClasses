@@ -29,10 +29,30 @@ package net.crimsoncraft.permclasses;
 public class PermClass {
 
     private String name;
+
     private ClassType type;
 
     public PermClass(String name, ClassType type) {
         this.name = name;
         this.type = type;
     }
+
+    /**
+     * Gets the name of this PermClass.
+     * 
+     * @return The name of this PermClass.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the type of PermClass this is.
+     * 
+     * @return The type of this PermClass.
+     */
+    public ClassType getType() {
+        return type;
+    }
+
 }
