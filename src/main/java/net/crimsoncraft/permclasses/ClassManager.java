@@ -25,6 +25,9 @@ package net.crimsoncraft.permclasses;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
  * Manages classes.
@@ -33,8 +36,25 @@ public class ClassManager {
 
     private Map<String, PermClass> classes = new HashMap<String, PermClass>();
     private PermClasses plugin;
+    private net.milkbowl.vault.permission.Permission permissionsHook;
 
     public ClassManager(PermClasses plugin) {
         this.plugin = plugin;
+        setupPermissions();
+    }
+    
+    /**
+     * Sets up permissions for the plugin.
+     */
+    private void setupPermissions() {
+        RegisteredServiceProvider<net.milkbowl.vault.permission.Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+        if (permissionProvider != null) {
+            permissionsHook = permissionProvider.getProvider();
+        }
+        
+        if (permissionsHook == null) {
+            plugin.getLogger().log(Level.SEVERE, "No permissions plugin detected! This is pointless! Disabling the plugin.");
+            Bukkit.getPluginManager().disablePlugin(plugin);
+        }
     }
 }
