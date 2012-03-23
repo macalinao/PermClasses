@@ -20,6 +20,15 @@
         <version.number>${release.number}.${build.tag}</version.number>
     </properties>
 
+    <!-- License -->
+    <licenses>
+        <license>
+            <name>Voxton License Version 1</name>
+            <url>http://voxton.net/voxton-license-v1.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <!-- Source code -->
     <scm>
         <developerConnection>scm:git:git@github.com:Voxton/${project.name}.git</developerConnection>
@@ -120,6 +129,14 @@
                 <directory>${basedir}/src/main/resources</directory>
                 <includes>
                     <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>LICENSE.txt</include>
                 </includes>
             </resource>
         </resources>

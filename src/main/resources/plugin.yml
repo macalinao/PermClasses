@@ -1,7 +1,8 @@
 name: ${project.name}
 description: ${project.description}
 author: AlbireoX
-version: ${version.number}
+version: ${release.number}
+website: ${project.url}
 
 main: net.crimsoncraft.permclasses.PermClasses
 depend: [Vault]
