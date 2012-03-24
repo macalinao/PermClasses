@@ -27,9 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.World;
 
 /**
  * Manages classes.
@@ -74,7 +73,7 @@ public class ClassManager {
     /**
      * Loads all classes from the Permission plugin.
      */
-    public void loadClasses() {
+    public final void loadClasses() {
         classTypes = new HashMap<String, ClassType>();
         classes = new HashMap<String, PermClass>();
         classesToGroups = new HashMap<String, PermClass>();
@@ -97,7 +96,7 @@ public class ClassManager {
             String classNameStr = split[1];
 
             ClassType type = new ClassType(classTypeStr);
-            PermClass pcl = new PermClass(classNameStr, type);
+            PermClass pcl = new PermClass(group, classNameStr, type);
 
             classTypes.put(type.getId(), type);
             classes.put(pcl.getId(), pcl);
@@ -114,6 +113,16 @@ public class ClassManager {
     public PermClass getClassFromId(String id) {
         return classes.get(id);
     }
+    
+    /**
+     * Gets a PermClass from its name.
+     * 
+     * @param name The name of the PermClass.
+     * @return The PermClass associated with the name.
+     */
+    public PermClass getClassFromName(String name) {
+        return getClassFromId(PermClasses.formatNameToId(name));
+    }
 
     /**
      * Gets a list of all {@link ClassType}s on the server.
@@ -122,6 +131,25 @@ public class ClassManager {
      */
     public List<ClassType> getClassTypes() {
         return new ArrayList<ClassType>(classTypes.values());
+    }
+
+    /**
+     * Sets a player's PermClass.
+     *
+     * @param player The player to set the PermClass of.
+     * @param pcl The PermClass to set.
+     */
+    public void setClass(String player, PermClass pcl) {
+        PermClass toRemove = getClasses(player).get(pcl.getType());
+        if (toRemove != null) {
+            for (World world : Bukkit.getWorlds()) {
+                plugin.getPermAPI().playerRemoveGroup(world, player, toRemove.getGroup());
+            }
+        }
+
+        for (World world : Bukkit.getWorlds()) {
+            plugin.getPermAPI().playerAddGroup(world, player, pcl.getGroup());
+        }
     }
 
     /**

@@ -23,9 +23,12 @@
  */
 package net.crimsoncraft.permclasses;
 
+import java.util.Map;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.spout.api.ChatColor;
 
 /**
  * The main PermissionsClasses command.
@@ -47,7 +50,26 @@ public class PclCommand implements CommandExecutor {
     public void parseCommand(CommandSender sender, Command cmd, String label, String[] args) {
     }
 
+    /**
+     * Performs the /pcl set command.
+     *
+     * <p>/pcl set &lt;player&gt; &lt;className&gt;</p>
+     *
+     * <p>Sets a player’s class to the specified class name.</p>
+     *
+     * @param sender The sender of the command.
+     * @param player The player to set the class of.
+     * @param className The name of the class to set.
+     */
     public void doSet(CommandSender sender, String player, String className) {
+        PermClass pcl = plugin.getClassManager().getClassFromName(className);
+        if (pcl == null) {
+            sender.sendMessage(ChatColor.RED + "The specified class '" + className + "' does not exist.");
+            return;
+        }
+
+        plugin.getClassManager().setClass(player, pcl);
+        sender.sendMessage(ChatColor.YELLOW + "The class of the player '" + player + "' was successfully set to '" + pcl.getName() + "'.");
     }
 
 }

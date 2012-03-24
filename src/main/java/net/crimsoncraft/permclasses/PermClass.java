@@ -24,17 +24,29 @@
 package net.crimsoncraft.permclasses;
 
 /**
- * Represents a permission class.
+ * Represents an immutable permission class.
  */
 public class PermClass {
 
-    private String name;
+    private final String group;
 
-    private ClassType type;
+    private final String name;
 
-    public PermClass(String name, ClassType type) {
+    private final ClassType type;
+
+    public PermClass(String group, String name, ClassType type) {
+        this.group = group;
         this.name = name;
         this.type = type;
+    }
+
+    /**
+     * Gets the class's group.
+     * 
+     * @return The group.
+     */
+    public String getGroup() {
+        return group;
     }
 
     /**
