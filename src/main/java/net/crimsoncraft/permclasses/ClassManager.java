@@ -35,19 +35,37 @@ import org.bukkit.plugin.RegisteredServiceProvider;
  * Manages classes.
  */
 public class ClassManager {
+
     /**
      * The {@link ClassType}s registered on the server.
      */
     private Map<String, ClassType> classTypes = new HashMap<String, ClassType>();
 
+    /**
+     * The {@link PermClass}es registered on the server,
+     */
     private Map<String, PermClass> classes = new HashMap<String, PermClass>();
 
+    /**
+     * The prefix used for classes as defined in the permissions plugin.
+     */
     private String classPrefix = "pcl_";
 
-    private PermClasses plugin;
+    /**
+     * The hook to the {@link PermClasses} main class.
+     */
+    private final PermClasses plugin;
 
+    /**
+     * The hook to the Permission API.
+     */
     private net.milkbowl.vault.permission.Permission permAPI;
 
+    /**
+     * Constructor.
+     * 
+     * @param plugin The {@link PermClasses} main class. 
+     */
     public ClassManager(PermClasses plugin) {
         this.plugin = plugin;
         setupPermissions();
@@ -70,7 +88,7 @@ public class ClassManager {
 
     /**
      * Gets a permissions class from its name.
-     * 
+     *
      * @param name The name of the PermClass.
      * @return The PermClass that corresponds to the name.
      */
@@ -80,7 +98,7 @@ public class ClassManager {
 
     /**
      * Adds a permissions class to this ClassManager. Names are not checked.
-     * 
+     *
      * @param pcl The {@link PermClass} to add.
      */
     public void addClass(PermClass pcl) {
@@ -89,7 +107,7 @@ public class ClassManager {
 
     /**
      * Gets a list of all {@link ClassType}s on the server.
-     * 
+     *
      * @return A list of all {@link ClassType}s on the server.
      */
     public List<ClassType> getClassTypes() {
