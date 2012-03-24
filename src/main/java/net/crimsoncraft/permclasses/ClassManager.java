@@ -62,45 +62,24 @@ public class ClassManager {
     private final PermClasses plugin;
 
     /**
-     * The hook to the Permission API.
-     */
-    private net.milkbowl.vault.permission.Permission permAPI;
-
-    /**
      * Constructor.
      *
      * @param plugin The {@link PermClasses} main class.
      */
     public ClassManager(PermClasses plugin) {
         this.plugin = plugin;
-        setupPermissions();
         loadClasses();
-    }
-
-    /**
-     * Sets up permissions for the plugin.
-     */
-    private void setupPermissions() {
-        RegisteredServiceProvider<net.milkbowl.vault.permission.Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-        if (permissionProvider != null) {
-            permAPI = permissionProvider.getProvider();
-        }
-
-        if (permAPI == null) {
-            plugin.getLogger().log(Level.SEVERE, "No permissions plugin detected! This is pointless! Disabling the plugin.");
-            Bukkit.getPluginManager().disablePlugin(plugin);
-        }
     }
 
     /**
      * Loads all classes from the Permission plugin.
      */
-    private void loadClasses() {
+    public void loadClasses() {
         classTypes = new HashMap<String, ClassType>();
         classes = new HashMap<String, PermClass>();
         classesToGroups = new HashMap<String, PermClass>();
 
-        String[] groups = permAPI.getGroups();
+        String[] groups = plugin.getPermAPI().getGroups();
 
         for (String group : groups) {
             if (!group.startsWith(classPrefix)) {
@@ -152,7 +131,7 @@ public class ClassManager {
      * @return The player's classes.
      */
     public Map<ClassType, PermClass> getClasses(String player) {
-        String[] groups = permAPI.getPlayerGroups(Bukkit.getWorlds().get(0), player);
+        String[] groups = plugin.getPermAPI().getPlayerGroups(Bukkit.getWorlds().get(0), player);
         Map<ClassType, PermClass> classMap = new HashMap<ClassType, PermClass>();
         for (String group : groups) {
             PermClass pcl = classesToGroups.get(group);

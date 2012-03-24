@@ -24,6 +24,9 @@
 package net.crimsoncraft.permclasses;
 
 import java.util.logging.Level;
+import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -33,10 +36,18 @@ public class PermClasses extends JavaPlugin {
 
     private ClassManager classManager;
 
+    private PclCommand pclCommand;
+
+    /**
+     * The hook to the Permission API.
+     */
+    private net.milkbowl.vault.permission.Permission permAPI;
+
     @Override
     public void onDisable() {
         getLogger().log(Level.INFO, "PermClasses version " + getDescription().getVersion() + " disabling...");
         this.classManager = null;
+        this.pclCommand = null;
         getLogger().log(Level.INFO, "Plugin disabled.");
     }
 
@@ -44,7 +55,24 @@ public class PermClasses extends JavaPlugin {
     public void onEnable() {
         getLogger().log(Level.INFO, "PermClasses version " + getDescription().getVersion() + " loading...");
         this.classManager = new ClassManager(this);
+        this.pclCommand = new PclCommand(this);
+        setupPermissions();
         getLogger().log(Level.INFO, "Plugin enabled.");
+    }
+
+    /**
+     * Sets up permissions for the plugin.
+     */
+    private void setupPermissions() {
+        RegisteredServiceProvider<net.milkbowl.vault.permission.Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+        if (permissionProvider != null) {
+            permAPI = permissionProvider.getProvider();
+        }
+
+        if (permAPI == null) {
+            getLogger().log(Level.SEVERE, "No permissions plugin detected! This is pointless! Disabling the plugin.");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
     }
 
     /**
@@ -57,8 +85,26 @@ public class PermClasses extends JavaPlugin {
     }
 
     /**
-     * Formats a name to an id.
-     *s
+     * Gets the command.
+     * 
+     * @return The command.
+     */
+    public PclCommand getPclCommand() {
+        return pclCommand;
+    }
+
+    /**
+     * Gets the Permission API.
+     * 
+     * @return The Permission API.
+     */
+    public Permission getPermAPI() {
+        return permAPI;
+    }
+
+    /**
+     * Formats a name to an id. s
+     *
      * @param name The name of the class.
      * @return The class id.
      */
