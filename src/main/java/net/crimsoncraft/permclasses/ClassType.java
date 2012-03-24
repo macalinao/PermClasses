@@ -27,23 +27,34 @@ package net.crimsoncraft.permclasses;
  * Represents a type of class.
  */
 public class ClassType {
+
     private String name;
-    
+
+    /**
+     * Constructor.
+     *
+     * @param name The name of the ClassType.
+     */
     public ClassType(String name) {
-        
+        this.name = name;
     }
-    
+
+    /**
+     * Gets the ID of this ClassType.
+     *
+     * @return The ID of the ClassType.
+     */
     public String getId() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return PermClasses.formatNameToId(getName());
     }
-    
+
     /**
      * Gets the name of this class type.
-     * 
+     *
      * @return The name of this ClassType.
      */
     public String getName() {
         return name;
     }
-    
+
 }
