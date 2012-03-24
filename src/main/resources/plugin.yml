@@ -6,3 +6,18 @@ website: ${project.url}
 
 main: net.crimsoncraft.permclasses.PermClasses
 depend: [Vault]
+
+commands:
+  pcl:
+    description: PermClasses base command.
+    usage: /pcl <action> [args]
+    
+permissions:
+  pcl.admin.*:
+    description: Grants access to all admin commands.
+    default: op
+    children:
+      pcl.admin.set: true
+      pcl.admin.reset: true
+      pcl.admin.rm: true
+      pcl.admin.reload: true

@@ -62,6 +62,11 @@ public class PclCommand implements CommandExecutor {
      * @param className The name of the class to set.
      */
     public void doSet(CommandSender sender, String player, String className) {
+        if (!sender.hasPermission("pcl.admin.set")) {
+            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+            return;
+        }
+
         PermClass pcl = plugin.getClassManager().getClassFromName(className);
         if (pcl == null) {
             sender.sendMessage(ChatColor.RED + "The specified class '" + className + "' does not exist.");
