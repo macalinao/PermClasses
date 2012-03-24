@@ -35,7 +35,9 @@ import org.bukkit.plugin.RegisteredServiceProvider;
  * Manages classes.
  */
 public class ClassManager {
-
+    /**
+     * The {@link ClassType}s registered on the server.
+     */
     private Map<String, ClassType> classTypes = new HashMap<String, ClassType>();
 
     private Map<String, PermClass> classes = new HashMap<String, PermClass>();
@@ -85,8 +87,13 @@ public class ClassManager {
         classes.put(pcl.getName(), pcl);
     }
 
+    /**
+     * Gets a list of all {@link ClassType}s on the server.
+     * 
+     * @return A list of all {@link ClassType}s on the server.
+     */
     public List<ClassType> getClassTypes() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return new ArrayList<ClassType>(classTypes.values());
     }
 
     /**
