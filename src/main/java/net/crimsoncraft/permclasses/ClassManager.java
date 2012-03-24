@@ -42,9 +42,14 @@ public class ClassManager {
     private Map<String, ClassType> classTypes = new HashMap<String, ClassType>();
 
     /**
-     * The {@link PermClass}es registered on the server,
+     * The {@link PermClass}es registered on the server.
      */
     private Map<String, PermClass> classes = new HashMap<String, PermClass>();
+
+    /**
+     * The {@link PermClass}es mapped to their group names.
+     */
+    private Map<String, PermClass> classesToGroups = new HashMap<String, PermClass>();
 
     /**
      * The prefix used for classes as defined in the permissions plugin.
@@ -63,12 +68,13 @@ public class ClassManager {
 
     /**
      * Constructor.
-     * 
-     * @param plugin The {@link PermClasses} main class. 
+     *
+     * @param plugin The {@link PermClasses} main class.
      */
     public ClassManager(PermClasses plugin) {
         this.plugin = plugin;
         setupPermissions();
+        loadClasses();
     }
 
     /**
@@ -87,22 +93,47 @@ public class ClassManager {
     }
 
     /**
-     * Gets a permissions class from its name.
-     *
-     * @param name The name of the PermClass.
-     * @return The PermClass that corresponds to the name.
+     * Loads all classes from the Permission plugin.
      */
-    public PermClass getClassFromName(String name) {
-        return classes.get(name);
+    private void loadClasses() {
+        classTypes = new HashMap<String, ClassType>();
+        classes = new HashMap<String, PermClass>();
+        classesToGroups = new HashMap<String, PermClass>();
+
+        String[] groups = permAPI.getGroups();
+
+        for (String group : groups) {
+            if (!group.startsWith(classPrefix)) {
+                continue;
+            }
+
+            String classCompound = group.substring(classPrefix.length() - 1);
+            String[] split = classCompound.split("_");
+
+            if (split.length < 2) {
+                return;
+            }
+
+            String classTypeStr = split[0];
+            String classNameStr = split[1];
+
+            ClassType type = new ClassType(classTypeStr);
+            PermClass pcl = new PermClass(classNameStr, type);
+
+            classTypes.put(type.getId(), type);
+            classes.put(pcl.getId(), pcl);
+            classesToGroups.put(group, pcl);
+        }
     }
 
     /**
-     * Adds a permissions class to this ClassManager. Names are not checked.
+     * Gets a permissions class from its id.
      *
-     * @param pcl The {@link PermClass} to add.
+     * @param id The name of the PermClass.
+     * @return The PermClass that corresponds to the id.
      */
-    public void addClass(PermClass pcl) {
-        classes.put(pcl.getName(), pcl);
+    public PermClass getClassFromId(String id) {
+        return classes.get(id);
     }
 
     /**
@@ -124,18 +155,11 @@ public class ClassManager {
         String[] groups = permAPI.getPlayerGroups(Bukkit.getWorlds().get(0), player);
         Map<ClassType, PermClass> classMap = new HashMap<ClassType, PermClass>();
         for (String group : groups) {
-            if (!group.startsWith("pcl_")) {
+            PermClass pcl = classesToGroups.get(group);
+            if (pcl == null) {
                 continue;
             }
-
-            for (ClassType type : getClassTypes()) {
-                if (!group.startsWith("pcl_" + type.getId())) {
-                    continue;
-                }
-
-                int index = type.getId().length() + classPrefix.length() - 1;
-                String classId = group.substring(index);
-            }
+            classMap.put(pcl.getType(), pcl);
         }
         return classMap;
     }
