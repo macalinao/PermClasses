@@ -39,16 +39,16 @@ public class PermClass {
 
     /**
      * Gets the id of this PermClass.
-     * 
+     *
      * @return This PermClass's id.
      */
     public String getId() {
-        return idFromName(getName());
+        return PermClasses.formatNameToId(getName());
     }
-    
+
     /**
      * Gets the name of this PermClass.
-     * 
+     *
      * @return The name of this PermClass.
      */
     public String getName() {
@@ -57,20 +57,11 @@ public class PermClass {
 
     /**
      * Gets the type of PermClass this is.
-     * 
+     *
      * @return The type of this PermClass.
      */
     public ClassType getType() {
         return type;
     }
 
-    /**
-     * Gets a class's id from its name.
-     * 
-     * @param name The name of the class.
-     * @return The class id.
-     */
-    public static final String idFromName(String name) {
-        return name.toLowerCase().replace(' ', '-').replace('_', '-');
-    }
 }

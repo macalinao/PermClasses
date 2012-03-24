@@ -35,9 +35,9 @@ import static org.mockito.Mockito.*;
  *
  * @author ianschool
  */
-public class PermClassTest {
-    
-    public PermClassTest() {
+public class PermClassesTest {
+
+    public PermClassesTest() {
     }
 
     @BeforeClass
@@ -47,25 +47,25 @@ public class PermClassTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     @Test
-    public void testIdFromName() {
-        System.out.println("Testing the idFromName method.");
-        
+    public void testFormatNameToId() {
+        System.out.println("Testing the formatNameToId method.");
+
         String name = "This_is MY clAss_iD";
-        
+
         String expected = "this-is-my-class-id";
-        String result = PermClass.idFromName(name);
-        
+        String result = PermClasses.formatNameToId(name);
+
         assertEquals(expected, result);
     }
-    
+
 }

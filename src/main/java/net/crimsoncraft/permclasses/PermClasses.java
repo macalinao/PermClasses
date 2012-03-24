@@ -49,11 +49,21 @@ public class PermClasses extends JavaPlugin {
 
     /**
      * Gets the plugin's class manager.
-     * 
+     *
      * @return The class manager of the plugin.
      */
     public ClassManager getClassManager() {
         return classManager;
+    }
+
+    /**
+     * Formats a name to an id.
+     *s
+     * @param name The name of the class.
+     * @return The class id.
+     */
+    public static String formatNameToId(String name) {
+        return name.toLowerCase().replace(' ', '-').replace('_', '-');
     }
 
 }
