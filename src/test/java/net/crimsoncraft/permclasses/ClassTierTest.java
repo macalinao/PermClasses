@@ -24,7 +24,8 @@
 package net.crimsoncraft.permclasses;
 
 import com.google.common.collect.Lists;
-import java.util.List;
+import com.google.common.collect.Sets;
+import java.util.Set;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -79,13 +80,13 @@ public class ClassTierTest {
         ClassManager cm = mock(ClassManager.class);
 
         PermClass pcl = new PermClass(cm, "myclass", "MyClass");
-        List<PermClass> classes = Lists.newArrayList(pcl);
+        Set<PermClass> classes = Sets.newHashSet(pcl);
 
         ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
         instance.addClass(pcl);
 
-        List<PermClass> expected = classes;
-        List<PermClass> result = instance.getClasses();
+        Set<PermClass> expected = classes;
+        Set<PermClass> result = instance.getClasses();
         assertEquals(expected, result);
     }
 
@@ -104,7 +105,7 @@ public class ClassTierTest {
 
         ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
         instance.addClass(myClass);
-        
+
         assertTrue(instance.getClasses().contains(myClass));
 
         instance.addClass(newClass);
