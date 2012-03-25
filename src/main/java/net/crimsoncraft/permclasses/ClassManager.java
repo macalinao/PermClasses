@@ -49,14 +49,14 @@ public class ClassManager {
     private Map<String, PermClass> classesToGroups;
 
     /**
-     * The {@link ClassTier}s on the server.
-     */
-    private Map<String, ClassTier> classTiers;
-
-    /**
      * The {@link ClassType}s registered on the server.
      */
     private Map<String, ClassType> classTypes;
+
+    /**
+     * The {@link ClassTier}s on the server.
+     */
+    private Map<String, ClassTier> classTiers;
 
     /**
      * The prefix used for classes as defined in the permissions plugin.
@@ -86,18 +86,6 @@ public class ClassManager {
 
         Configuration config = plugin.getConfig();
 
-        //Load tiers
-        ConfigurationSection tierSection = config.getConfigurationSection("tiers");
-        if (tierSection == null) {
-            tierSection = config.createSection("tiers");
-        }
-
-        for (String id : tierSection.getKeys(false)) {
-            String name = tierSection.getString(id);
-            ClassTier tier = new ClassTier(this, id, name);
-            classTiers.put(tier.getId(), tier);
-        }
-
         //Load types
         ConfigurationSection typeSection = config.getConfigurationSection("types");
         if (typeSection == null) {
@@ -108,6 +96,18 @@ public class ClassManager {
             String name = typeSection.getString(id);
             ClassType type = new ClassType(this, id, name);
             classTypes.put(type.getId(), type);
+        }
+
+        //Load tiers
+        ConfigurationSection tierSection = config.getConfigurationSection("tiers");
+        if (tierSection == null) {
+            tierSection = config.createSection("tiers");
+        }
+
+        for (String id : tierSection.getKeys(false)) {
+            String name = tierSection.getString(id);
+            ClassTier tier = new ClassTier(this, id, name);
+            classTiers.put(tier.getId(), tier);
         }
 
         //Load classes

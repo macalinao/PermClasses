@@ -1,0 +1,99 @@
+types:
+  combat: Combat
+  economic: Economic
+  
+tiers:
+  tier1: Tier 1
+  tier2: Tier 2
+  tier3: Tier 3
+
+classes:
+  prospector:
+    name: Prospector
+    type: economic
+    tier: tier1
+    
+  handyman:
+    name: Handyman
+    type: economic
+    tier: tier1
+    
+  demolisher:
+    name: Demolisher
+    type: economic
+    tier: tier1
+  
+  archer:
+    name: Archer
+    type: combat
+    tier: tier1
+    
+  warrior:
+    name: Warrior
+    type: combat
+    tier: tier1
+
+  axeman:
+    name: Axeman
+    type: combat
+    tier: tier1
+    
+  mayor:
+    name: Mayor
+    type: economic
+    tier: tier2
+    
+  merchant:
+    name: Merchant
+    type: economic
+    tier: tier2
+    
+  engineer:
+    name: Engineer
+    type: economic
+    tier: tier2
+    
+  mage:
+    name: Mage
+    type: combat
+    tier: tier2
+    
+  paladin:
+    name: Paladin
+    type: combat
+    tier: tier2
+    
+  hunter:
+    name: Hunter
+    type: combat
+    tier: tier2
+    
+  rider:
+    name: Rider
+    type: economic
+    tier: tier3
+    
+  politician:
+    name: Politician
+    type: economic
+    tier: tier3
+    
+  ceo:
+    name: CEO
+    type: economic
+    tier: tier3
+    
+  survivalist:
+    name: Survivalist
+    type: combat
+    tier: tier3
+    
+  spartan:
+    name: Spartan
+    type: combat
+    tier: tier3
+    
+  sorceror:
+    name: Sorceror
+    type: combat
+    tier: tier3

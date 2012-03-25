@@ -54,6 +54,7 @@ public class PermClasses extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().log(Level.INFO, "PermClasses version " + getDescription().getVersion() + " loading...");
+        getConfig().options().copyDefaults(true);
         this.classManager = new ClassManager(this);
         this.pclCommand = new PclCommand(this);
         setupPermissions();
