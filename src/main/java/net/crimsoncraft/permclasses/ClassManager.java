@@ -49,14 +49,14 @@ public class ClassManager {
     private Map<String, PermClass> classesToGroups;
 
     /**
-     * The {@link ClassType}s registered on the server.
-     */
-    private Map<String, ClassType> classTypes;
-
-    /**
      * The {@link ClassTier}s on the server.
      */
     private Map<String, ClassTier> classTiers;
+
+    /**
+     * The {@link ClassType}s registered on the server.
+     */
+    private Map<String, ClassType> classTypes;
 
     /**
      * The prefix used for classes as defined in the permissions plugin.
@@ -86,8 +86,29 @@ public class ClassManager {
 
         Configuration config = plugin.getConfig();
 
-        //TODO Load tiers
-        //TODO Load types
+        //Load tiers
+        ConfigurationSection tierSection = config.getConfigurationSection("tiers");
+        if (tierSection == null) {
+            tierSection = config.createSection("tiers");
+        }
+
+        for (String id : tierSection.getKeys(false)) {
+            String name = tierSection.getString(id);
+            ClassTier tier = new ClassTier(this, id, name);
+            classTiers.put(tier.getId(), tier);
+        }
+
+        //Load types
+        ConfigurationSection typeSection = config.getConfigurationSection("types");
+        if (typeSection == null) {
+            typeSection = config.createSection("types");
+        }
+
+        for (String id : typeSection.getKeys(false)) {
+            String name = typeSection.getString(id);
+            ClassType type = new ClassType(this, id, name);
+            classTypes.put(type.getId(), type);
+        }
 
         //Load classes
         ConfigurationSection classSection = config.getConfigurationSection("classes");
@@ -230,14 +251,13 @@ public class ClassManager {
     public ClassTier getClassTier(String id) {
         return classTiers.get(id);
     }
-    
+
     /**
      * Saves a type to this {@link ClassManager}.
-     * 
+     *
      * @param type The {@link ClassType} to save.
      */
     public void saveType(ClassType type) {
-        
     }
 
     /**
