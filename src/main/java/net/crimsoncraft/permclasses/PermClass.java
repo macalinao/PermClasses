@@ -61,9 +61,9 @@ public class PermClass {
      * @param name The name of the class.
      * @param type The type of the class.
      */
-    public PermClass(ClassManager classManager, String id, String name) {
+    public PermClass(ClassManager classManager, String name) {
         this.classManager = classManager;
-        this.id = id;
+        this.id = PermClasses.formatNameToId(name);
         this.name = name;
     }
 

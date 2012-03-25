@@ -93,9 +93,8 @@ public class ClassManager {
         }
 
         for (String tierName : classesSection.getKeys(false)) {
-            String tierId = PermClasses.formatNameToId(tierName);
-            ClassTier tier = new ClassTier(this, tierId, tierName);
-            classTiers.put(tierId, tier);
+            ClassTier tier = new ClassTier(this, tierName);
+            classTiers.put(tier.getId(), tier);
 
             ConfigurationSection tierSection = classesSection.getConfigurationSection(tier.getName());
 
@@ -105,7 +104,7 @@ public class ClassManager {
                 ClassType type = getClassType(PermClasses.formatNameToId(typeName));
                 if (type == null) {
                     String typeId = PermClasses.formatNameToId(typeName);
-                    type = new ClassType(this, typeId, typeName);
+                    type = new ClassType(this, typeName);
                     classTypes.put(type.getId(), type);
                 }
 
@@ -126,7 +125,7 @@ public class ClassManager {
      */
     public PermClass createClass(String name) {
         String pid = PermClasses.formatNameToId(name);
-        PermClass pcl = new PermClass(this, pid, name);
+        PermClass pcl = new PermClass(this, name);
         classes.put(pcl.getId(), pcl);
         classesToGroups.put(pcl.getGroup(), pcl);
         return pcl;
@@ -141,8 +140,8 @@ public class ClassManager {
         classTypes = new HashMap<String, ClassType>();
         classTiers = new HashMap<String, ClassTier>();
 
-        ClassType defaultType = new ClassType(this, "default", "Default");
-        ClassTier defaultTier = new ClassTier(this, "default", "Default");
+        ClassType defaultType = new ClassType(this, "Default");
+        ClassTier defaultTier = new ClassTier(this, "Default");
 
         classTypes.put(defaultType.getId(), defaultType);
         classTiers.put(defaultTier.getId(), defaultTier);

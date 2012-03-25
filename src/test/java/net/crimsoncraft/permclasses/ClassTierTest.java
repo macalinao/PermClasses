@@ -62,7 +62,7 @@ public class ClassTierTest {
 
         ClassManager cm = mock(ClassManager.class);
 
-        ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
+        ClassTier instance = new ClassTier(cm, "MyTier");
 
         String expected = "MyTier";
         String result = instance.getName();
@@ -77,15 +77,15 @@ public class ClassTierTest {
         System.out.println("Testing the getClasses method.");
 
         ClassManager cm = mock(ClassManager.class);
-        ClassType ct = new ClassType(cm, "mytype", "MyType");
+        ClassType ct = new ClassType(cm, "MyType");
         Set<ClassType> types = Sets.newHashSet(ct);
         when(cm.getClassTypes()).thenReturn(types);
 
-        PermClass pcl = new PermClass(cm, "myclass", "MyClass");
+        PermClass pcl = new PermClass(cm, "MyClass");
         ct.addClass(pcl);
         Set<PermClass> classes = Sets.newHashSet(pcl);
 
-        ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
+        ClassTier instance = new ClassTier(cm, "MyTier");
         instance.addClass(pcl);
 
         Set<PermClass> expected = classes;
@@ -98,33 +98,33 @@ public class ClassTierTest {
         System.out.println("Testing the getClasses method with a classType.");
 
         ClassManager cm = mock(ClassManager.class);
-        ClassType ct = new ClassType(cm, "mytype", "MyType");
+        ClassType ct = new ClassType(cm, "MyType");
         Set<ClassType> types = Sets.newHashSet(ct);
         when(cm.getClassTypes()).thenReturn(types);
 
-        PermClass pcl = new PermClass(cm, "myclass", "MyClass");
+        PermClass pcl = new PermClass(cm, "MyClass");
         ct.addClass(pcl);
         Set<PermClass> classes = Sets.newHashSet(pcl);
 
-        ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
+        ClassTier instance = new ClassTier(cm, "MyTier");
         instance.addClass(pcl);
 
         Set<PermClass> expected = classes;
         Set<PermClass> result = instance.getClasses(ct);
         assertEquals(expected, result);
     }
-    
+
     public void testCreateClass() {
         System.out.println("Testing the createClass method.");
-        
+
         ClassManager cm = mock(ClassManager.class);
         ClassType ct = mock(ClassType.class);
-        
-        ClassTier instance = new ClassTier(cm, "my-id", "My Id");
+
+        ClassTier instance = new ClassTier(cm, "My Id");
         PermClass created = instance.createClass(ct, "Explorer");
-        
+
         verify(ct).addClass(created);
-        
+
         ClassTier expected = instance;
         ClassTier result = created.getTier();
         assertEquals(expected, result);
@@ -138,16 +138,16 @@ public class ClassTierTest {
         System.out.println("Testing the addClass method.");
 
         ClassManager cm = mock(ClassManager.class);
-        ClassType ct = new ClassType(cm, "mytype", "MyType");
+        ClassType ct = new ClassType(cm, "MyType");
         Set<ClassType> types = Sets.newHashSet(ct);
         when(cm.getClassTypes()).thenReturn(types);
 
-        PermClass myClass = new PermClass(cm, "myclass", "MyClass");
+        PermClass myClass = new PermClass(cm, "MyClass");
         ct.addClass(myClass);
-        PermClass newClass = new PermClass(cm, "newclass", "NewClass");
+        PermClass newClass = new PermClass(cm, "NewClass");
         ct.addClass(newClass);
 
-        ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
+        ClassTier instance = new ClassTier(cm, "MyTier");
         instance.addClass(myClass);
 
         assertTrue(instance.getClasses().contains(myClass));

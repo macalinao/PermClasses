@@ -87,7 +87,7 @@ public class PermClasses extends JavaPlugin {
 
     /**
      * Gets the command.
-     * 
+     *
      * @return The command.
      */
     public PclCommand getPclCommand() {
@@ -96,7 +96,7 @@ public class PermClasses extends JavaPlugin {
 
     /**
      * Gets the Permission API.
-     * 
+     *
      * @return The Permission API.
      */
     public Permission getPermAPI() {

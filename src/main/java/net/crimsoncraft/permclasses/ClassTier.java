@@ -55,11 +55,10 @@ public class ClassTier {
      *
      * @param cm The ClassManager.
      * @param name The name of the tier.
-     * @param classes The classes within the tier.
      */
-    public ClassTier(ClassManager cm, String id, String name) {
+    public ClassTier(ClassManager cm, String name) {
         this.classManager = cm;
-        this.id = id;
+        this.id = PermClasses.formatNameToId(name);
         this.name = name;
     }
 

@@ -60,7 +60,7 @@ public class ClassTypeTest {
 
         ClassManager cm = mock(ClassManager.class);
 
-        ClassType instance = new ClassType(cm, "the-id", "The Id");
+        ClassType instance = new ClassType(cm, "The Id");
 
         String expected = "the-id";
         String result = instance.getId();
@@ -76,7 +76,7 @@ public class ClassTypeTest {
 
         ClassManager cm = mock(ClassManager.class);
 
-        ClassType instance = new ClassType(cm, "the-id", "The Id");
+        ClassType instance = new ClassType(cm, "The Id");
 
         String expected = "The Id";
         String result = instance.getName();
@@ -91,7 +91,7 @@ public class ClassTypeTest {
         System.out.println("Testing the addClass method.");
 
         ClassManager cm = mock(ClassManager.class);
-        ClassType instance = new ClassType(cm, "the-id", "The Id");
+        ClassType instance = new ClassType(cm, "The Id");
         PermClass test = mock(PermClass.class);
 
         instance.addClass(test);

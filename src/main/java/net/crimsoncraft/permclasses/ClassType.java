@@ -55,12 +55,11 @@ public class ClassType {
      * Constructor.
      *
      * @param classManager The {@link ClassManager}.
-     * @param id The id of the {@link ClassType}.
      * @param name The name of the ClassType.
      */
-    public ClassType(ClassManager classManager, String id, String name) {
+    public ClassType(ClassManager classManager, String name) {
         this.classManager = classManager;
-        this.id = id;
+        this.id = PermClasses.formatNameToId(name);
         this.name = name;
     }
 
