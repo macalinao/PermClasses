@@ -268,6 +268,23 @@ public class ClassManager {
      */
     public void saveTier(ClassTier tier) {
         plugin.getConfig().set("tiers." + tier.getId(), tier.getName());
+        
+        for (PermClass pcl : tier.getClasses()) {
+            
+        }
+    }
+    
+    public void saveClass(PermClass pcl) {
+        String classPath = "classes." + pcl.getId();
+        
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection(classPath);
+        if (section == null) {
+            section =  plugin.getConfig().createSection(classPath);
+        }
+        
+        section.set("name", pcl.getName());
+        section.set("type", pcl.getType().getId());
+        section.set("tier", pcl.getTier().getId());
     }
 
     /**
