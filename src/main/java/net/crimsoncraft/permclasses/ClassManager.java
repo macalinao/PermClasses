@@ -258,6 +258,7 @@ public class ClassManager {
      * @param type The {@link ClassType} to save.
      */
     public void saveType(ClassType type) {
+        plugin.getConfig().set("types." + type.getId(), type.getName());
     }
 
     /**
@@ -266,7 +267,7 @@ public class ClassManager {
      * @param tier The tier to save.
      */
     public void saveTier(ClassTier tier) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        plugin.getConfig().set("tiers." + tier.getId(), tier.getName());
     }
 
     /**
