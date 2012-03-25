@@ -117,7 +117,10 @@ public class ClassManager {
             }
 
             //Insert the class
-            PermClass pcl = new PermClass(this, id, name, type, tier);
+            PermClass pcl = new PermClass(this, id, name);
+            type.addClass(pcl);
+            tier.addClass(pcl);
+            
             classes.put(pcl.getId(), pcl);
             classesToGroups.put(pcl.getGroup(), pcl);
         }

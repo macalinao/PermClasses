@@ -46,7 +46,7 @@ public class PermClass {
     /**
      * The type of the {@link PermClass}.
      */
-    private final ClassType type;
+    private ClassType type;
 
     /**
      * The tier of the {@link PermClass}.
@@ -60,14 +60,11 @@ public class PermClass {
      * @param id The id of the class.
      * @param name The name of the class.
      * @param type The type of the class.
-     * @param tier The tier of the class.
      */
-    public PermClass(ClassManager classManager, String id, String name, ClassType type, ClassTier tier) {
+    public PermClass(ClassManager classManager, String id, String name) {
         this.classManager = classManager;
         this.id = id;
         this.name = name;
-        this.type = type;
-        this.tier = tier;
     }
 
     /**
@@ -95,6 +92,15 @@ public class PermClass {
      */
     public ClassType getType() {
         return type;
+    }
+
+    /**
+     * Sets the type of the class.
+     *
+     * @param type The {@link ClassType} to set.
+     */
+    public void setType(ClassType type) {
+        this.type = type;
     }
 
     /**

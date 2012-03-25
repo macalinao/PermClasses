@@ -24,7 +24,9 @@
 package net.crimsoncraft.permclasses;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a tier, or group, of classes.
@@ -49,7 +51,7 @@ public class ClassTier {
     /**
      * The PermClasses within the tier.
      */
-    private List<PermClass> classes = new ArrayList<PermClass>();
+    private Set<PermClass> classes = new HashSet<PermClass>();
 
     /**
      * Constructor.
@@ -100,6 +102,16 @@ public class ClassTier {
         classes.add(pcl);
         pcl.setTier(this);
         classManager.saveTier(this);
+    }
+    
+    /**
+     * Returns true if this tier contains the given class.
+     * 
+     * @param pcl The {@link PermClass} to check.
+     * @return True if the tier contains the class.
+     */
+    public boolean hasClass(PermClass pcl) {
+        return classes.contains(pcl);
     }
 
 }
