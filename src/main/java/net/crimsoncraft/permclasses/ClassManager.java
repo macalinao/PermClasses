@@ -100,20 +100,22 @@ public class ClassManager {
             ConfigurationSection tierSection = classesSection.getConfigurationSection(tier.getName());
 
             for (String typeName : tierSection.getKeys(false)) {
-                List<String> classNames = tierSection.getStringList(tierName);
+                List<String> classNames = tierSection.getStringList(typeName);
 
                 ClassType type = getClassType(PermClasses.formatNameToId(typeName));
                 if (type == null) {
                     String typeId = PermClasses.formatNameToId(typeName);
                     type = new ClassType(this, typeId, typeName);
-                    classTypes.put(typeId, type);
+                    classTypes.put(type.getId(), type);
                 }
 
                 for (String className : classNames) {
-                    tier.createClass(type, className);
+                    PermClass pcl = tier.createClass(type, className);
                 }
             }
         }
+
+        System.out.println(getClassTypes());
     }
 
     /**
@@ -224,6 +226,17 @@ public class ClassManager {
             classMap.put(pcl.getType(), pcl);
         }
         return classMap;
+    }
+
+    /**
+     * Gets the class of a player.
+     *
+     * @param player The player to get the class of.
+     * @param type The type of class to get.
+     * @return The class corresponding with the type.
+     */
+    public PermClass getPlayerClass(String player, ClassType type) {
+        return getClasses(player).get(type);
     }
 
     /**

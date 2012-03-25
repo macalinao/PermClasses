@@ -92,4 +92,9 @@ public class ClassType {
         pcl.setType(this);
     }
 
+    @Override
+    public String toString() {
+        return "ClassType{id=" + id + ", name=" + name + '}';
+    }
+
 }

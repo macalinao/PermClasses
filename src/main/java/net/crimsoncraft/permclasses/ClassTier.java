@@ -127,11 +127,13 @@ public class ClassTier {
      *
      * @param type The {@link ClassType} to add.
      * @param className The name of the {@link PermClass} to create.
+     * @return The created {@link PermClass}.
      */
-    public void createClass(ClassType type, String className) {
+    public PermClass createClass(ClassType type, String className) {
         PermClass pcl = classManager.createClass(className);
         type.addClass(pcl);
         addClass(pcl);
+        return pcl;
     }
 
     /**
@@ -153,6 +155,11 @@ public class ClassTier {
      */
     public boolean hasClass(PermClass pcl) {
         return getClasses().contains(pcl);
+    }
+
+    @Override
+    public String toString() {
+        return "ClassTier{" + "id=" + id + ", name=" + name + '}';
     }
 
 }

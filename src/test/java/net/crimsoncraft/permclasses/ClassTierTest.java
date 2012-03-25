@@ -113,6 +113,22 @@ public class ClassTierTest {
         Set<PermClass> result = instance.getClasses(ct);
         assertEquals(expected, result);
     }
+    
+    public void testCreateClass() {
+        System.out.println("Testing the createClass method.");
+        
+        ClassManager cm = mock(ClassManager.class);
+        ClassType ct = mock(ClassType.class);
+        
+        ClassTier instance = new ClassTier(cm, "my-id", "My Id");
+        PermClass created = instance.createClass(ct, "Explorer");
+        
+        verify(ct).addClass(created);
+        
+        ClassTier expected = instance;
+        ClassTier result = created.getTier();
+        assertEquals(expected, result);
+    }
 
     /**
      * Test of addClass method, of class ClassTier.

@@ -136,4 +136,9 @@ public class PermClass {
         return new StringBuilder(classManager.getGroupPrefix()).append(getId()).toString();
     }
 
+    @Override
+    public String toString() {
+        return "PermClass{" + "id=" + id + ", name=" + name + ", type=" + type + ", tier=" + tier + '}';
+    }
+
 }
