@@ -23,10 +23,17 @@
  */
 package net.crimsoncraft.permclasses;
 
+import java.util.Set;
+
 /**
  * Represents a type of class.
  */
 public class ClassType {
+
+    /**
+     * The {@link ClassManager}.
+     */
+    private final ClassManager classManager;
 
     /**
      * The id of the ClassType.
@@ -39,11 +46,19 @@ public class ClassType {
     private String name;
 
     /**
+     * The classes this ClassType contains.
+     */
+    private Set<PermClass> classes;
+
+    /**
      * Constructor.
      *
+     * @param classManager The {@link ClassManager}.
+     * @param id The id of the {@link ClassType}.
      * @param name The name of the ClassType.
      */
-    public ClassType(String id, String name) {
+    public ClassType(ClassManager classManager, String id, String name) {
+        this.classManager = classManager;
         this.id = id;
         this.name = name;
     }
@@ -64,6 +79,17 @@ public class ClassType {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Adds a class to this {@link ClassType}.
+     *
+     * @param pcl The {@link PermClass} to add.
+     */
+    public void addClass(PermClass pcl) {
+        classes.add(pcl);
+        pcl.setType(this);
+
     }
 
 }

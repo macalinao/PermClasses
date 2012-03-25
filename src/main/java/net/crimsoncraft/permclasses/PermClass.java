@@ -97,9 +97,12 @@ public class PermClass {
     /**
      * Sets the type of the class.
      *
+     * <p><strong>Internal use only. See {@link ClassType#addClass(net.crimsoncraft.permclasses.PermClass)}.
+     * </strong></p>
+     *
      * @param type The {@link ClassType} to set.
      */
-    public void setType(ClassType type) {
+    void setType(ClassType type) {
         this.type = type;
     }
 
@@ -115,9 +118,12 @@ public class PermClass {
     /**
      * Sets the tier of the class.
      *
+     * <p><strong> Internal use only. See {@link ClassTier#addClass(net.crimsoncraft.permclasses.PermClass)}.
+     * </strong></p>
+     *
      * @param tier The tier to set.
      */
-    public void setTier(ClassTier tier) {
+    void setTier(ClassTier tier) {
         this.tier = tier;
     }
 

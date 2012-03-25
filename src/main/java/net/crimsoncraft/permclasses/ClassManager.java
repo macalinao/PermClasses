@@ -120,7 +120,7 @@ public class ClassManager {
             PermClass pcl = new PermClass(this, id, name);
             type.addClass(pcl);
             tier.addClass(pcl);
-            
+
             classes.put(pcl.getId(), pcl);
             classesToGroups.put(pcl.getGroup(), pcl);
         }
@@ -135,7 +135,7 @@ public class ClassManager {
         classTypes = new HashMap<String, ClassType>();
         classTiers = new HashMap<String, ClassTier>();
 
-        ClassType defaultType = new ClassType("default", "Default");
+        ClassType defaultType = new ClassType(this, "default", "Default");
         ClassTier defaultTier = new ClassTier(this, "default", "Default");
 
         classTypes.put(defaultType.getId(), defaultType);
