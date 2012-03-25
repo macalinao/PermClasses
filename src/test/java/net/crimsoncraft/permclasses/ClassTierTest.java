@@ -104,11 +104,11 @@ public class ClassTierTest {
 
         ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
         instance.addClass(myClass);
+        
         assertTrue(instance.getClasses().contains(myClass));
 
         instance.addClass(newClass);
-
-        verify(cm).saveTier(instance);
+        verify(cm, times(2)).saveTier(instance);
 
         assertTrue(instance.getClasses().contains(myClass));
         assertTrue(instance.getClasses().contains(newClass));
