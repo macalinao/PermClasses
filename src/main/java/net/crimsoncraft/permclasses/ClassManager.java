@@ -195,6 +195,19 @@ public class ClassManager {
     }
 
     /**
+     * Resets a player's PermClass.
+     *
+     * @param player The player to reset the {@link PermClass} of.
+     * @param type The {@link ClassType} to reset.
+     */
+    public void resetClass(String player, ClassType type) {
+        PermClass current = getClasses(player).get(type);
+        for (World world : Bukkit.getWorlds()) {
+            plugin.getPermAPI().playerRemoveGroup(world, player, current.getGroup());
+        }
+    }
+
+    /**
      * Gets the classes of a player.
      *
      * @param player The player to get the classes of.

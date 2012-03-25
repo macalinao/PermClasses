@@ -77,4 +77,31 @@ public class PclCommand implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "The class of the player '" + player + "' was successfully set to '" + pcl.getName() + "'.");
     }
 
+    /**
+     * Performs the /pcl rm command.
+     *
+     * <p>/pcl set &lt;player&gt; &lt;classType&gt;</p>
+     *
+     * <p>Removes a player’s class.</p>
+     *
+     * @param sender The sender of the command.
+     * @param player The player to set the class of.
+     * @param classType The type of class to remove.
+     */
+    public void doRm(CommandSender sender, String player, String classType) {
+        if (!sender.hasPermission("pcl.admin.rm")) {
+            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+            return;
+        }
+
+        ClassType type = plugin.getClassManager().getClassTypeFromName(classType);
+        if (type == null) {
+            sender.sendMessage(ChatColor.RED + "The specified class '" + classType + "' does not exist.");
+            return;
+        }
+
+        plugin.getClassManager().resetClass(player, type);
+        sender.sendMessage(ChatColor.YELLOW + "The class of the player '" + player + "' was successfully set to '" + type.getName() + "'.");
+    }
+
 }
