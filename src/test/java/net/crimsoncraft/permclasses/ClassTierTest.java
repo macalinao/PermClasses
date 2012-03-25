@@ -78,8 +78,12 @@ public class ClassTierTest {
         System.out.println("Testing the getClasses method.");
 
         ClassManager cm = mock(ClassManager.class);
+        ClassType ct = new ClassType(cm, "mytype", "MyType");
+        Set<ClassType> types = Sets.newHashSet(ct);
+        when(cm.getClassTypes()).thenReturn(types);
 
         PermClass pcl = new PermClass(cm, "myclass", "MyClass");
+        ct.addClass(pcl);
         Set<PermClass> classes = Sets.newHashSet(pcl);
 
         ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
@@ -98,10 +102,14 @@ public class ClassTierTest {
         System.out.println("Testing the addClass method.");
 
         ClassManager cm = mock(ClassManager.class);
-        ClassType ct = mock(ClassType.class);
+        ClassType ct = new ClassType(cm, "mytype", "MyType");
+        Set<ClassType> types = Sets.newHashSet(ct);
+        when(cm.getClassTypes()).thenReturn(types);
 
         PermClass myClass = new PermClass(cm, "myclass", "MyClass");
+        ct.addClass(myClass);
         PermClass newClass = new PermClass(cm, "newclass", "NewClass");
+        ct.addClass(newClass);
 
         ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
         instance.addClass(myClass);

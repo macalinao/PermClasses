@@ -23,6 +23,7 @@
  */
 package net.crimsoncraft.permclasses;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -48,7 +49,7 @@ public class ClassType {
     /**
      * The classes this ClassType contains.
      */
-    private Set<PermClass> classes;
+    private Set<PermClass> classes = new HashSet<PermClass>();
 
     /**
      * Constructor.

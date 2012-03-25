@@ -48,7 +48,7 @@ public class ClassTier {
     /**
      * The PermClasses within the tier.
      */
-    private Map<ClassType, Set<PermClass>> classes;
+    private Map<ClassType, Set<PermClass>> classes = new HashMap<ClassType, Set<PermClass>>();
 
     /**
      * Constructor.
@@ -84,16 +84,29 @@ public class ClassTier {
     /**
      * Gets all classes that correspond with the given {@link ClassType}.
      *
+     * <p><strong> Internal use only. See {@link ClassTier#getClasses(net.crimsoncraft.permclasses.ClassType)}.
+     * </strong></p>
+     *
      * @param type The {@link ClassType} to get.
      * @return A {@link Set} of {@link {PermClass}es of the {@link ClassType}.
      */
-    public Set<PermClass> getClasses(ClassType type) {
+    private Set<PermClass> getClassesInternal(ClassType type) {
         Set<PermClass> typeClasses = classes.get(type);
         if (typeClasses == null) {
             typeClasses = new HashSet<PermClass>();
             classes.put(type, typeClasses);
         }
-        return new HashSet<PermClass>(typeClasses);
+        return typeClasses;
+    }
+
+    /**
+     * Gets all classes that correspond with the given {@link ClassType}.
+     *
+     * @param type The {@link ClassType} to get.
+     * @return A {@link Set} of {@link {PermClass}es of the {@link ClassType}.
+     */
+    public Set<PermClass> getClasses(ClassType type) {
+        return new HashSet<PermClass>(getClassesInternal(type));
     }
 
     /**
@@ -104,7 +117,7 @@ public class ClassTier {
     public Set<PermClass> getClasses() {
         Set<PermClass> fullSet = new HashSet<PermClass>();
         for (ClassType type : classManager.getClassTypes()) {
-            fullSet.addAll(getClasses(type));
+            fullSet.addAll(getClassesInternal(type));
         }
         return fullSet;
     }
@@ -127,7 +140,7 @@ public class ClassTier {
      * @param pcl The class to add to the tier.
      */
     public void addClass(PermClass pcl) {
-        getClasses(pcl.getType()).add(pcl);
+        getClassesInternal(pcl.getType()).add(pcl);
         pcl.setTier(this);
         classManager.saveTier(this);
     }

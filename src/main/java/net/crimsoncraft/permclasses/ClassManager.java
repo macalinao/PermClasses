@@ -23,11 +23,11 @@
  */
 package net.crimsoncraft.permclasses;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
@@ -171,8 +171,8 @@ public class ClassManager {
      *
      * @return A list of all {@link ClassType}s on the server.
      */
-    public List<ClassType> getClassTypes() {
-        return new ArrayList<ClassType>(classTypes.values());
+    public Set<ClassType> getClassTypes() {
+        return new HashSet<ClassType>(classTypes.values());
     }
 
     /**
