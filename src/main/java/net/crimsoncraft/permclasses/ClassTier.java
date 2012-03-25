@@ -23,10 +23,7 @@
  */
 package net.crimsoncraft.permclasses;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Represents a tier, or group, of classes.
@@ -51,7 +48,7 @@ public class ClassTier {
     /**
      * The PermClasses within the tier.
      */
-    private Set<PermClass> classes = new HashSet<PermClass>();
+    private Map<ClassType, Set<PermClass>> classes;
 
     /**
      * Constructor.
@@ -85,12 +82,43 @@ public class ClassTier {
     }
 
     /**
+     * Gets all classes that correspond with the given {@link ClassType}.
+     *
+     * @param type The {@link ClassType} to get.
+     * @return A {@link Set} of {@link {PermClass}es of the {@link ClassType}.
+     */
+    public Set<PermClass> getClasses(ClassType type) {
+        Set<PermClass> typeClasses = classes.get(type);
+        if (typeClasses == null) {
+            typeClasses = new HashSet<PermClass>();
+            classes.put(type, typeClasses);
+        }
+        return new HashSet<PermClass>(typeClasses);
+    }
+
+    /**
      * Gets a list of all PermClasses in this tier.
      *
      * @return The PermClasses in the tier.
      */
-    public List<PermClass> getClasses() {
-        return new ArrayList<PermClass>(classes);
+    public Set<PermClass> getClasses() {
+        Set<PermClass> fullSet = new HashSet<PermClass>();
+        for (ClassType type : classManager.getClassTypes()) {
+            fullSet.addAll(getClasses(type));
+        }
+        return fullSet;
+    }
+
+    /**
+     * Adds a class to this class tier.
+     *
+     * @param type The {@link ClassType} to add.
+     * @param className The name of the {@link PermClass} to create.
+     */
+    public void createClass(ClassType type, String className) {
+        PermClass pcl = classManager.createClass(className);
+        type.addClass(pcl);
+        addClass(pcl);
     }
 
     /**
@@ -99,19 +127,19 @@ public class ClassTier {
      * @param pcl The class to add to the tier.
      */
     public void addClass(PermClass pcl) {
-        classes.add(pcl);
+        getClasses(pcl.getType()).add(pcl);
         pcl.setTier(this);
         classManager.saveTier(this);
     }
-    
+
     /**
      * Returns true if this tier contains the given class.
-     * 
+     *
      * @param pcl The {@link PermClass} to check.
      * @return True if the tier contains the class.
      */
     public boolean hasClass(PermClass pcl) {
-        return classes.contains(pcl);
+        return getClasses().contains(pcl);
     }
 
 }

@@ -89,7 +89,6 @@ public class ClassType {
     public void addClass(PermClass pcl) {
         classes.add(pcl);
         pcl.setType(this);
-        classManager.saveType(this);
     }
 
 }

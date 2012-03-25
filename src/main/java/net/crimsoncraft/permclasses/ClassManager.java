@@ -86,65 +86,48 @@ public class ClassManager {
 
         Configuration config = plugin.getConfig();
 
-        //Load types
-        ConfigurationSection typeSection = config.getConfigurationSection("types");
-        if (typeSection == null) {
-            typeSection = config.createSection("types");
-        }
-
-        for (String id : typeSection.getKeys(false)) {
-            String name = typeSection.getString(id);
-            ClassType type = new ClassType(this, id, name);
-            classTypes.put(type.getId(), type);
-        }
-
-        //Load tiers
-        ConfigurationSection tierSection = config.getConfigurationSection("tiers");
-        if (tierSection == null) {
-            tierSection = config.createSection("tiers");
-        }
-
-        for (String id : tierSection.getKeys(false)) {
-            String name = tierSection.getString(id);
-            ClassTier tier = new ClassTier(this, id, name);
-            classTiers.put(tier.getId(), tier);
-        }
-
         //Load classes
-        ConfigurationSection classSection = config.getConfigurationSection("classes");
-        if (classSection == null) {
-            classSection = config.createSection("classes");
+        ConfigurationSection classesSection = config.getConfigurationSection("classes");
+        if (classesSection == null) {
+            classesSection = config.createSection("classes");
         }
 
-        for (String id : classSection.getKeys(false)) {
-            ConfigurationSection section = classSection.getConfigurationSection(id);
+        for (String tierName : classesSection.getKeys(false)) {
+            String tierId = PermClasses.formatNameToId(tierName);
+            ClassTier tier = new ClassTier(this, tierId, tierName);
+            classTiers.put(tierId, tier);
 
-            String name = section.getString("name", id);
+            ConfigurationSection tierSection = classesSection.getConfigurationSection(tier.getName());
 
-            String typeString = section.getString("type", "default");
-            String tierString = section.getString("tier", "default");
+            for (String typeName : tierSection.getKeys(false)) {
+                List<String> classNames = tierSection.getStringList(tierName);
 
-            ClassType type = getClassType(typeString);
-            ClassTier tier = getClassTier(tierString);
+                ClassType type = getClassType(PermClasses.formatNameToId(typeName));
+                if (type == null) {
+                    String typeId = PermClasses.formatNameToId(typeName);
+                    type = new ClassType(this, typeId, typeName);
+                    classTypes.put(typeId, type);
+                }
 
-            if (type == null) {
-                plugin.getLogger().log(Level.WARNING, "Unknown class type '" + typeString + "' specified; defaulting to default...");
-                type = getClassType("default");
+                for (String className : classNames) {
+                    tier.createClass(type, className);
+                }
             }
-
-            if (tier == null) {
-                plugin.getLogger().log(Level.WARNING, "Unknown class tier '" + tierString + "' specified; defaulting to default...");
-                tier = getClassTier("default");
-            }
-
-            //Insert the class
-            PermClass pcl = new PermClass(this, id, name);
-            type.addClass(pcl);
-            tier.addClass(pcl);
-
-            classes.put(pcl.getId(), pcl);
-            classesToGroups.put(pcl.getGroup(), pcl);
         }
+    }
+
+    /**
+     * Creates a class.
+     *
+     * @param name The name of the {@link PermClass}.
+     * @return The {@link PermClass} created.
+     */
+    public PermClass createClass(String name) {
+        String pid = PermClasses.formatNameToId(name);
+        PermClass pcl = new PermClass(this, pid, name);
+        classes.put(pcl.getId(), pcl);
+        classesToGroups.put(pcl.getGroup(), pcl);
+        return pcl;
     }
 
     /**
@@ -242,6 +225,17 @@ public class ClassManager {
     }
 
     /**
+     * Gets a {@link ClassType} from its name.
+     *
+     * @param name The name of the {@link ClassType}.
+     * @return The {@link ClassType} corresponding with the name, or null if
+     * there is none.
+     */
+    public ClassType getClassTypeFromName(String name) {
+        return getClassType(PermClasses.formatNameToId(name));
+    }
+
+    /**
      * Gets a {@link ClassTier} from its id.
      *
      * @param id The id of the {@link ClassTier}.
@@ -253,38 +247,20 @@ public class ClassManager {
     }
 
     /**
-     * Saves a type to this {@link ClassManager}.
-     *
-     * @param type The {@link ClassType} to save.
-     */
-    public void saveType(ClassType type) {
-        plugin.getConfig().set("types." + type.getId(), type.getName());
-    }
-
-    /**
      * Saves a tier to this ClassManager.
      *
      * @param tier The tier to save.
      */
     public void saveTier(ClassTier tier) {
-        plugin.getConfig().set("tiers." + tier.getId(), tier.getName());
-        
-        for (PermClass pcl : tier.getClasses()) {
-            
-        }
-    }
-    
-    public void saveClass(PermClass pcl) {
-        String classPath = "classes." + pcl.getId();
-        
-        ConfigurationSection section = plugin.getConfig().getConfigurationSection(classPath);
+        String tierPath = "classes." + tier.getName();
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection(tierPath);
         if (section == null) {
-            section =  plugin.getConfig().createSection(classPath);
+            section = plugin.getConfig().createSection(tierPath);
         }
-        
-        section.set("name", pcl.getName());
-        section.set("type", pcl.getType().getId());
-        section.set("tier", pcl.getTier().getId());
+
+        for (ClassType type : getClassTypes()) {
+            section.set(type.getName(), tier.getClasses(type));
+        }
     }
 
     /**
