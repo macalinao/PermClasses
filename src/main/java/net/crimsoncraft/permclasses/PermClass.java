@@ -28,12 +28,33 @@ package net.crimsoncraft.permclasses;
  */
 public class PermClass {
 
+    /**
+     * The group of the {@link PermClass}.
+     */
     private final String group;
 
+    /**
+     * The name of the {@link PermClass}.
+     */
     private final String name;
 
+    /**
+     * The type of the {@link PermClass}.
+     */
     private final ClassType type;
 
+    /**
+     * The tier of the {@link PermClass}.
+     */
+    private ClassTier tier;
+
+    /**
+     * Constructor.
+     *
+     * @param group The group name.
+     * @param name The name of the class.
+     * @param type The type of class.
+     */
     public PermClass(String group, String name, ClassType type) {
         this.group = group;
         this.name = name;
@@ -42,7 +63,7 @@ public class PermClass {
 
     /**
      * Gets the class's group.
-     * 
+     *
      * @return The group.
      */
     public String getGroup() {
@@ -74,6 +95,24 @@ public class PermClass {
      */
     public ClassType getType() {
         return type;
+    }
+
+    /**
+     * Gets the tier of the class.
+     * 
+     * @return The tier of the class.
+     */
+    public ClassTier getTier() {
+        return tier;
+    }
+
+    /**
+     * Sets the tier of the class.
+     * 
+     * @param tier The tier to set.
+     */
+    public void setTier(ClassTier tier) {
+        this.tier = tier;
     }
 
 }

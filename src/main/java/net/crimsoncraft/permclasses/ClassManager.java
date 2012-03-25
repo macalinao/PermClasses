@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.Configuration;
 
 /**
  * Manages classes.
@@ -71,37 +72,31 @@ public class ClassManager {
     }
 
     /**
-     * Loads all classes from the Permission plugin.
+     * Loads all classes.
      */
     public final void loadClasses() {
         classTypes = new HashMap<String, ClassType>();
         classes = new HashMap<String, PermClass>();
         classesToGroups = new HashMap<String, PermClass>();
 
-        String[] groups = plugin.getPermAPI().getGroups();
-
-        for (String group : groups) {
-            if (!group.startsWith(classPrefix)) {
-                continue;
-            }
-
-            String classCompound = group.substring(classPrefix.length() - 1);
-            String[] split = classCompound.split("_");
-
-            if (split.length < 2) {
-                return;
-            }
-
-            String classTypeStr = split[0];
-            String classNameStr = split[1];
-
-            ClassType type = new ClassType(classTypeStr);
-            PermClass pcl = new PermClass(group, classNameStr, type);
-
-            classTypes.put(type.getId(), type);
-            classes.put(pcl.getId(), pcl);
-            classesToGroups.put(group, pcl);
-        }
+        Configuration config = plugin.getConfig();
+        
+        
+//        String[] groups = plugin.getPermAPI().getGroups();
+//
+//        for (String group : groups) {
+//            if (!group.startsWith(classPrefix)) {
+//                continue;
+//            }
+//
+//            String className = group.substring(classPrefix.length() - 1);
+//
+//            PermClass pcl = new PermClass(group, className, type);
+//
+//            classTypes.put(type.getId(), type);
+//            classes.put(pcl.getId(), pcl);
+//            classesToGroups.put(group, pcl);
+//        }
     }
 
     /**
@@ -169,6 +164,15 @@ public class ClassManager {
             classMap.put(pcl.getType(), pcl);
         }
         return classMap;
+    }
+
+    /**
+     * Saves a tier to this ClassManager.
+     * 
+     * @param tier The tier to save.
+     */
+    public void saveTier(ClassTier tier) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 }
