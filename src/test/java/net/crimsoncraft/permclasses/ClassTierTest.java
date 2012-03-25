@@ -100,11 +100,11 @@ public class ClassTierTest {
         ClassType ct = mock(ClassType.class);
 
         PermClass myClass = new PermClass(cm, "myclass", "MyClass");
-        List<PermClass> classes = Lists.newArrayList(myClass);
-
         PermClass newClass = new PermClass(cm, "newclass", "NewClass");
 
         ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
+        instance.addClass(myClass);
+        assertTrue(instance.getClasses().contains(myClass));
 
         instance.addClass(newClass);
 
