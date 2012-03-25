@@ -63,10 +63,10 @@ public class ClassTierTest {
         ClassManager cm = mock(ClassManager.class);
         ClassType ct = mock(ClassType.class);
 
-        PermClass pcl = new PermClass("pcl_myclass", "MyClass", ct);
+        PermClass pcl = new PermClass(cm, "myclass", "MyClass", ct);
         List<PermClass> classes = Lists.newArrayList(pcl);
 
-        ClassTier instance = new ClassTier(cm, "MyTier", classes);
+        ClassTier instance = new ClassTier(cm, "MyTier");
 
         String expected = "MyTier";
         String result = instance.getName();
@@ -83,10 +83,11 @@ public class ClassTierTest {
         ClassManager cm = mock(ClassManager.class);
         ClassType ct = mock(ClassType.class);
 
-        PermClass pcl = new PermClass("pcl_myclass", "MyClass", ct);
+        PermClass pcl = new PermClass(cm, "myclass", "MyClass", ct);
         List<PermClass> classes = Lists.newArrayList(pcl);
 
-        ClassTier instance = new ClassTier(cm, "MyTier", classes);
+        ClassTier instance = new ClassTier(cm, "MyTier");
+        instance.addClass(pcl);
 
         List<PermClass> expected = classes;
         List<PermClass> result = instance.getClasses();
@@ -103,12 +104,12 @@ public class ClassTierTest {
         ClassManager cm = mock(ClassManager.class);
         ClassType ct = mock(ClassType.class);
 
-        PermClass myClass = new PermClass("pcl_myclass", "MyClass", ct);
+        PermClass myClass = new PermClass(cm, "myclass", "MyClass", ct);
         List<PermClass> classes = Lists.newArrayList(myClass);
 
-        PermClass newClass = new PermClass("pcl_newclass", "NewClass", ct);
+        PermClass newClass = new PermClass(cm, "newclass", "NewClass", ct);
 
-        ClassTier instance = new ClassTier(cm, "MyTier", classes);
+        ClassTier instance = new ClassTier(cm, "MyTier");
 
         instance.addClass(newClass);
 

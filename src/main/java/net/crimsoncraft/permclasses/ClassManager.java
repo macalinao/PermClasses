@@ -27,9 +27,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 
 /**
  * Manages classes.
@@ -37,24 +39,29 @@ import org.bukkit.configuration.Configuration;
 public class ClassManager {
 
     /**
-     * The {@link ClassType}s registered on the server.
-     */
-    private Map<String, ClassType> classTypes = new HashMap<String, ClassType>();
-
-    /**
      * The {@link PermClass}es registered on the server.
      */
-    private Map<String, PermClass> classes = new HashMap<String, PermClass>();
+    private Map<String, PermClass> classes;
 
     /**
      * The {@link PermClass}es mapped to their group names.
      */
-    private Map<String, PermClass> classesToGroups = new HashMap<String, PermClass>();
+    private Map<String, PermClass> classesToGroups;
+
+    /**
+     * The {@link ClassType}s registered on the server.
+     */
+    private Map<String, ClassType> classTypes;
+
+    /**
+     * The {@link ClassTier}s on the server.
+     */
+    private Map<String, ClassTier> classTiers;
 
     /**
      * The prefix used for classes as defined in the permissions plugin.
      */
-    private String classPrefix = "pcl_";
+    private String groupPrefix = "pcl_";
 
     /**
      * The hook to the {@link PermClasses} main class.
@@ -68,35 +75,68 @@ public class ClassManager {
      */
     public ClassManager(PermClasses plugin) {
         this.plugin = plugin;
-        loadClasses();
+        loadAll();
     }
 
     /**
-     * Loads all classes.
+     * Loads everything.
      */
-    public final void loadClasses() {
-        classTypes = new HashMap<String, ClassType>();
-        classes = new HashMap<String, PermClass>();
-        classesToGroups = new HashMap<String, PermClass>();
+    public final void loadAll() {
+        setupDefaults();
 
         Configuration config = plugin.getConfig();
-        
-        
-//        String[] groups = plugin.getPermAPI().getGroups();
-//
-//        for (String group : groups) {
-//            if (!group.startsWith(classPrefix)) {
-//                continue;
-//            }
-//
-//            String className = group.substring(classPrefix.length() - 1);
-//
-//            PermClass pcl = new PermClass(group, className, type);
-//
-//            classTypes.put(type.getId(), type);
-//            classes.put(pcl.getId(), pcl);
-//            classesToGroups.put(group, pcl);
-//        }
+
+        //TODO Load tiers
+        //TODO Load types
+
+        //Load classes
+        ConfigurationSection classSection = config.getConfigurationSection("classes");
+        if (classSection == null) {
+            classSection = config.createSection("classes");
+        }
+
+        for (String id : classSection.getKeys(false)) {
+            ConfigurationSection section = classSection.getConfigurationSection(id);
+
+            String name = section.getString("name", id);
+
+            String typeString = section.getString("type", "default");
+            String tierString = section.getString("tier", "default");
+
+            ClassType type = getClassType(typeString);
+            ClassTier tier = getClassTier(tierString);
+
+            if (type == null) {
+                plugin.getLogger().log(Level.WARNING, "Unknown class type '" + typeString + "' specified; defaulting to default...");
+                type = getClassType("default");
+            }
+
+            if (tier == null) {
+                plugin.getLogger().log(Level.WARNING, "Unknown class tier '" + tierString + "' specified; defaulting to default...");
+                tier = getClassTier("default");
+            }
+
+            //Insert the class
+            PermClass pcl = new PermClass(this, id, name, type, tier);
+            classes.put(pcl.getId(), pcl);
+            classesToGroups.put(pcl.getGroup(), pcl);
+        }
+    }
+
+    /**
+     * Sets up all defaults and initializes maps.
+     */
+    private void setupDefaults() {
+        classes = new HashMap<String, PermClass>();
+        classesToGroups = new HashMap<String, PermClass>();
+        classTypes = new HashMap<String, ClassType>();
+        classTiers = new HashMap<String, ClassTier>();
+
+        ClassType defaultType = new ClassType("default", "Default");
+        ClassTier defaultTier = new ClassTier(this, "default", "Default");
+
+        classTypes.put(defaultType.getId(), defaultType);
+        classTiers.put(defaultTier.getId(), defaultTier);
     }
 
     /**
@@ -108,10 +148,10 @@ public class ClassManager {
     public PermClass getClassFromId(String id) {
         return classes.get(id);
     }
-    
+
     /**
      * Gets a PermClass from its name.
-     * 
+     *
      * @param name The name of the PermClass.
      * @return The PermClass associated with the name.
      */
@@ -167,12 +207,43 @@ public class ClassManager {
     }
 
     /**
+     * Gets a {@link ClassType} from its id.
+     *
+     * @param id The id of the {@link ClassType}.
+     * @return The {@link ClassType} corresponding with the id, or null if there
+     * is none.
+     */
+    public ClassType getClassType(String id) {
+        return classTypes.get(id);
+    }
+
+    /**
+     * Gets a {@link ClassTier} from its id.
+     *
+     * @param id The id of the {@link ClassTier}.
+     * @return The {@link ClassTier} corresponding with the id, or null if there
+     * is none.
+     */
+    public ClassTier getClassTier(String id) {
+        return classTiers.get(id);
+    }
+
+    /**
      * Saves a tier to this ClassManager.
-     * 
+     *
      * @param tier The tier to save.
      */
     public void saveTier(ClassTier tier) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    /**
+     * Gets the group prefix of {@link PermClass}es.
+     *
+     * @return The group prefix to use.
+     */
+    public String getGroupPrefix() {
+        return groupPrefix;
     }
 
 }

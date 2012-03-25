@@ -29,9 +29,14 @@ package net.crimsoncraft.permclasses;
 public class PermClass {
 
     /**
-     * The group of the {@link PermClass}.
+     * The {@link ClassManager}.
      */
-    private final String group;
+    private final ClassManager classManager;
+
+    /**
+     * The id of the {@link PermClass}.
+     */
+    private final String id;
 
     /**
      * The name of the {@link PermClass}.
@@ -51,23 +56,18 @@ public class PermClass {
     /**
      * Constructor.
      *
-     * @param group The group name.
+     * @param classManager The {@link ClassManager}.
+     * @param id The id of the class.
      * @param name The name of the class.
-     * @param type The type of class.
+     * @param type The type of the class.
+     * @param tier The tier of the class.
      */
-    public PermClass(String group, String name, ClassType type) {
-        this.group = group;
+    public PermClass(ClassManager classManager, String id, String name, ClassType type, ClassTier tier) {
+        this.classManager = classManager;
+        this.id = id;
         this.name = name;
         this.type = type;
-    }
-
-    /**
-     * Gets the class's group.
-     *
-     * @return The group.
-     */
-    public String getGroup() {
-        return group;
+        this.tier = tier;
     }
 
     /**
@@ -76,7 +76,7 @@ public class PermClass {
      * @return This PermClass's id.
      */
     public String getId() {
-        return PermClasses.formatNameToId(getName());
+        return id;
     }
 
     /**
@@ -99,7 +99,7 @@ public class PermClass {
 
     /**
      * Gets the tier of the class.
-     * 
+     *
      * @return The tier of the class.
      */
     public ClassTier getTier() {
@@ -108,11 +108,20 @@ public class PermClass {
 
     /**
      * Sets the tier of the class.
-     * 
+     *
      * @param tier The tier to set.
      */
     public void setTier(ClassTier tier) {
         this.tier = tier;
+    }
+
+    /**
+     * Gets the group name of this {@link PermClass}.
+     *
+     * @return The group name of the {@link PermClass}.
+     */
+    public String getGroup() {
+        return new StringBuilder(classManager.getGroupPrefix()).append(getId()).toString();
     }
 
 }

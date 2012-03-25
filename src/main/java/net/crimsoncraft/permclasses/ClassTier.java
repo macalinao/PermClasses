@@ -37,6 +37,11 @@ public class ClassTier {
     private final ClassManager classManager;
 
     /**
+     * The id of the ClassTier.
+     */
+    private final String id;
+
+    /**
      * The name of the ClassTier.
      */
     private String name;
@@ -53,13 +58,19 @@ public class ClassTier {
      * @param name The name of the tier.
      * @param classes The classes within the tier.
      */
-    public ClassTier(ClassManager cm, String name, List<PermClass> classes) {
+    public ClassTier(ClassManager cm, String id, String name) {
         this.classManager = cm;
+        this.id = id;
         this.name = name;
-        this.classes.addAll(classes);
-        for (PermClass pcl : classes) {
-            pcl.setTier(this);
-        }
+    }
+
+    /**
+     * Gets the id of this ClassTier.
+     *
+     * @return The id of the ClassTier.
+     */
+    public String getId() {
+        return id;
     }
 
     /**

@@ -28,6 +28,14 @@ package net.crimsoncraft.permclasses;
  */
 public class ClassType {
 
+    /**
+     * The id of the ClassType.
+     */
+    private final String id;
+
+    /**
+     * The name of the ClassType.
+     */
     private String name;
 
     /**
@@ -35,7 +43,8 @@ public class ClassType {
      *
      * @param name The name of the ClassType.
      */
-    public ClassType(String name) {
+    public ClassType(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -45,7 +54,7 @@ public class ClassType {
      * @return The ID of the ClassType.
      */
     public String getId() {
-        return PermClasses.formatNameToId(getName());
+        return id;
     }
 
     /**
