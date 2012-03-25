@@ -230,6 +230,15 @@ public class ClassManager {
     public ClassTier getClassTier(String id) {
         return classTiers.get(id);
     }
+    
+    /**
+     * Saves a type to this {@link ClassManager}.
+     * 
+     * @param type The {@link ClassType} to save.
+     */
+    public void saveType(ClassType type) {
+        
+    }
 
     /**
      * Saves a tier to this ClassManager.
