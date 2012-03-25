@@ -103,18 +103,15 @@ public class ClassManager {
 
                 ClassType type = getClassType(PermClasses.formatNameToId(typeName));
                 if (type == null) {
-                    String typeId = PermClasses.formatNameToId(typeName);
                     type = new ClassType(this, typeName);
                     classTypes.put(type.getId(), type);
                 }
 
                 for (String className : classNames) {
-                    PermClass pcl = tier.createClass(type, className);
+                    tier.createClass(type, className);
                 }
             }
         }
-
-        System.out.println(getClassTypes());
     }
 
     /**
