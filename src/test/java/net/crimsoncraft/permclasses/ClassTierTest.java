@@ -23,7 +23,6 @@
  */
 package net.crimsoncraft.permclasses;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Set;
 import org.junit.*;
@@ -91,6 +90,27 @@ public class ClassTierTest {
 
         Set<PermClass> expected = classes;
         Set<PermClass> result = instance.getClasses();
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testGetClasses_classType() {
+        System.out.println("Testing the getClasses method with a classType.");
+
+        ClassManager cm = mock(ClassManager.class);
+        ClassType ct = new ClassType(cm, "mytype", "MyType");
+        Set<ClassType> types = Sets.newHashSet(ct);
+        when(cm.getClassTypes()).thenReturn(types);
+
+        PermClass pcl = new PermClass(cm, "myclass", "MyClass");
+        ct.addClass(pcl);
+        Set<PermClass> classes = Sets.newHashSet(pcl);
+
+        ClassTier instance = new ClassTier(cm, "mytier", "MyTier");
+        instance.addClass(pcl);
+
+        Set<PermClass> expected = classes;
+        Set<PermClass> result = instance.getClasses(ct);
         assertEquals(expected, result);
     }
 
