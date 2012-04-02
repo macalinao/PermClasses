@@ -115,8 +115,30 @@ public class PclCommand implements CommandExecutor {
             return;
         }
 
-        plugin.getClassManager().resetClass(player, type);
-        sender.sendMessage(ChatColor.YELLOW + "The class of the player '" + player + "' was successfully set to '" + type.getName() + "'.");
+        Player plr = Bukkit.getPlayer(player);
+        if (plr == null) {
+            sender.sendMessage(ChatColor.RED + "The player you specified is not online.");
+            return;
+        }
+
+        PermClass current = plugin.getClassManager().getPlayerClass(plr.getName(), type);
+        if (current == null) {
+            sender.sendMessage(ChatColor.RED + "The player does not have a class associated with the specified class type.");
+            return;
+        }
+
+        current.unbind(plr);
+        sender.sendMessage(ChatColor.YELLOW + "The class of type '" + type.getName() + "' of the player '" + player + "' was successfully removed.");
+    }
+
+    public void doReset(CommandSender sender, String player) {
+        if (!sender.hasPermission("pcl.admin.rm")) {
+            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+            return;
+        }
+
+        for (ClassType type : plugin.getClassManager().getClassTypes()) {
+        }
     }
 
 }
