@@ -137,8 +137,20 @@ public class PclCommand implements CommandExecutor {
             return;
         }
 
-        for (ClassType type : plugin.getClassManager().getClassTypes()) {
+        Player plr = Bukkit.getPlayer(player);
+        if (plr == null) {
+            sender.sendMessage(ChatColor.RED + "The player you specified is not online.");
+            return;
         }
+
+        for (ClassType type : plugin.getClassManager().getClassTypes()) {
+            PermClass current = plugin.getClassManager().getPlayerClass(plr.getName(), type);
+            if (current != null) {
+                current.unbind(plr);
+            }
+        }
+
+        sender.sendMessage(ChatColor.YELLOW + "The classes of the player " + plr.getName() + " have been reset seccessfully.");
     }
 
 }
