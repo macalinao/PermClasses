@@ -156,7 +156,7 @@ public class PclCommand implements CommandExecutor {
             }
         }
 
-        sender.sendMessage(ChatColor.YELLOW + "The classes of the player " + plr.getName() + " have been reset seccessfully.");
+        sender.sendMessage(ChatColor.YELLOW + "The classes of the player " + plr.getName() + " have been reset successfully.");
     }
 
     /**
