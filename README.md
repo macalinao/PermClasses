@@ -1,5 +1,6 @@
 PermClasses
 ===========
+***Classes. Your way.***
 
 What is PermClasses?
 -----------
@@ -51,6 +52,26 @@ Commands prefixed with a "/" will be sent by the player. Commands not prefixed w
 PermClasses depends on 3rd party plugins to do a lot of its work. Personally, I recommend the unbelievably awesome [bPermissions](http://dev.bukkit.org/server-mods/bpermissions/), but you can use any Permissions plugin supported by [Vault](http://dev.bukkit.org/server-mods/vault/) that also supports groups.
 
 Permission groups must be named with a prefix of `_pcl_`. Their names must also be all lowercase, numbers, and hyphens. For example, if you had a class named "Warrior", your permission group would be named `_pcl_warrior`.
+
+Commands
+-----------
+### Admin
+* `/pcl set <player> <class>` - Sets the class of `player` to `class`.
+* `/pcl rm <player> <class type>` - Removes the class of `player` that corresponds with `class type`, if any.
+* `/pcl reset <player>` - Resets all classes of `player` to nothing.
+* `/pcl reload` - Reloads all configuration.
+
+Permissions
+-----------
+### Player
+* `pcl.use.*` - Allows the player to use any class.
+
+### Admin
+* `pcl.admin` - Grants all admin nodes as listed below, and also grants `pcl.use.*`.
+* `pcl.admin.set` - Allows use of the `/pcl set <player> <class>` command.
+* `pcl.admin.rm` - Allows use of the `/pcl rm <player> <class type>` command.
+* `pcl.admin.reset` - Allows use of the `/pcl reset <player>` command.
+* `pcl.admin.reload` - Allows use of the `/pcl reload` command.
 
 Need help?
 -----------
