@@ -99,12 +99,12 @@ public class ClassManager {
             ConfigurationSection tierSection = classesSection.getConfigurationSection(tier.getName());
 
             for (String typeName : tierSection.getKeys(false)) {
-                
+
                 ConfigurationSection classSection = tierSection.getConfigurationSection(typeName);
                 if (classSection == null) {
                     classSection = tierSection.createSection(typeName);
                 }
-                
+
                 Set<String> classNames = classSection.getKeys(false);
 
                 ClassType type = getClassType(PermClasses.formatNameToId(typeName));
@@ -126,8 +126,10 @@ public class ClassManager {
      * Creates a class.
      *
      * @param name The name of the {@link PermClass}.
-     * @param bindCmds A list of commands to be executed when the class is bound.
-     * @param unbindCmds A list of commands to be executed when the class is unbound.
+     * @param bindCmds A list of commands to be executed when the class is
+     * bound.
+     * @param unbindCmds A list of commands to be executed when the class is
+     * unbound.
      * @return The {@link PermClass} created.
      */
     public PermClass createClass(String name, List<String> bindCmds, List<String> unbindCmds) {
@@ -210,6 +212,9 @@ public class ClassManager {
      */
     public void resetClass(String player, ClassType type) {
         PermClass current = getClasses(player).get(type);
+        if (current == null) {
+            return;
+        }
         for (World world : Bukkit.getWorlds()) {
             plugin.getPermAPI().playerRemoveGroup(world, player, current.getGroup());
         }
@@ -224,12 +229,14 @@ public class ClassManager {
     public Map<ClassType, PermClass> getClasses(String player) {
         String[] groups = plugin.getPermAPI().getPlayerGroups(Bukkit.getWorlds().get(0), player);
         Map<ClassType, PermClass> classMap = new HashMap<ClassType, PermClass>();
-        for (String group : groups) {
-            PermClass pcl = classesToGroups.get(group);
-            if (pcl == null) {
-                continue;
+        if (groups != null) {
+            for (String group : groups) {
+                PermClass pcl = classesToGroups.get(group);
+                if (pcl == null) {
+                    continue;
+                }
+                classMap.put(pcl.getType(), pcl);
             }
-            classMap.put(pcl.getType(), pcl);
         }
         return classMap;
     }
