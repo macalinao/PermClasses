@@ -77,6 +77,14 @@ public class PermClasses extends JavaPlugin {
     }
 
     /**
+     * Reloads the plugin's configuration.
+     */
+    public void reload() {
+        this.reloadConfig();
+        this.classManager.loadAll();
+    }
+
+    /**
      * Gets the plugin's class manager.
      *
      * @return The class manager of the plugin.

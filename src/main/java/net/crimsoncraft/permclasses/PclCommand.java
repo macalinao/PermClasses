@@ -153,4 +153,14 @@ public class PclCommand implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "The classes of the player " + plr.getName() + " have been reset seccessfully.");
     }
 
+    public void doReload(CommandSender sender) {
+        if (!sender.hasPermission("pcl.admin.reload")) {
+            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+            return;
+        }
+        
+        sender.sendMessage(ChatColor.YELLOW + "Reloading PermClasses...");
+        plugin.reload();
+        sender.sendMessage(ChatColor.YELLOW + "PermClasses reloaded.");
+    }
 }
