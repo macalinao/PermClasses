@@ -300,6 +300,7 @@ public class ClassManager {
         for (ClassType type : getClassTypes()) {
             section.set(type.getName(), tier.getClasses(type));
         }
+        plugin.saveConfig();
     }
 
     /**
