@@ -131,6 +131,12 @@ public class PclCommand implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "The class of type '" + type.getName() + "' of the player '" + player + "' was successfully removed.");
     }
 
+    /**
+     * Performs the /pcl reset command.
+     *
+     * @param sender
+     * @param player
+     */
     public void doReset(CommandSender sender, String player) {
         if (!sender.hasPermission("pcl.admin.rm")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
@@ -153,14 +159,20 @@ public class PclCommand implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "The classes of the player " + plr.getName() + " have been reset seccessfully.");
     }
 
+    /**
+     * Performs the /pcl reload command.
+     *
+     * @param sender
+     */
     public void doReload(CommandSender sender) {
         if (!sender.hasPermission("pcl.admin.reload")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
             return;
         }
-        
+
         sender.sendMessage(ChatColor.YELLOW + "Reloading PermClasses...");
         plugin.reload();
         sender.sendMessage(ChatColor.YELLOW + "PermClasses reloaded.");
     }
+
 }

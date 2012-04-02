@@ -185,20 +185,20 @@ public class ClassManagerTest {
         expected = "myclass";
         result = pcl.getId();
         assertEquals(expected, result);
-        
+
         Player player = mock(Player.class);
         pcl.bind(player);
-        
+
         verify(player).chat("/hero bind");
-        
+
         ConsoleCommandSender sender = mock(ConsoleCommandSender.class);
         when(Bukkit.getConsoleSender()).thenReturn(sender);
-        
+
         pcl.unbind(player);
-        
+
         verify(player).chat("/my cmd");
         verify(player).chat("/other cmd");
-        
+
         PowerMockito.verifyStatic();
         Bukkit.dispatchCommand(sender, "console cmd");
     }

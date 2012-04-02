@@ -91,7 +91,7 @@ public class PermClass {
 
     /**
      * Gets the Permission corresponding with this PermClass.
-     * 
+     *
      * @return The Permission of the PermClass.
      */
     public Permission getPermission() {
