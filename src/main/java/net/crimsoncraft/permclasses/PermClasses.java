@@ -57,6 +57,7 @@ public class PermClasses extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         this.classManager = new ClassManager(this);
         this.pclCommand = new PclCommand(this);
+        getCommand("pcl").setExecutor(pclCommand);
         setupPermissions();
         getLogger().log(Level.INFO, "Plugin enabled.");
     }
