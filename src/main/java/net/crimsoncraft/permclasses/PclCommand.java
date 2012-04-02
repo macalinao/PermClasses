@@ -23,11 +23,11 @@
  */
 package net.crimsoncraft.permclasses;
 
-import java.util.Map;
-import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.spout.api.ChatColor;
 
 /**
@@ -52,9 +52,9 @@ public class PclCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "Please specify an action: /pcl (set|rm|reset|reload).");
             return;
         }
-        
+
         String action = args[0];
-        
+
         if (action.equalsIgnoreCase("set")) {
         }
     }
@@ -82,7 +82,13 @@ public class PclCommand implements CommandExecutor {
             return;
         }
 
-        plugin.getClassManager().setClass(player, pcl);
+        Player plr = Bukkit.getPlayer(player);
+        if (plr == null) {
+            sender.sendMessage(ChatColor.RED + "The player you specified is not online or does not exist.");
+            return;
+        }
+        pcl.bind(plr);
+
         sender.sendMessage(ChatColor.YELLOW + "The class of the player '" + player + "' was successfully set to '" + pcl.getName() + "'.");
     }
 
