@@ -31,5 +31,8 @@ permissions:
   pcl.admin.reload:
     description: Allows reloading of the plugin.
     
+  pcl.admin.sign.create:
+    description: Allows the creation of signs.
+    
   pcl.use.*:
     description: Allows the usage of all classes.
