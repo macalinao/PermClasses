@@ -13,14 +13,19 @@ PermClasses allows _extremely_ customizable classes to be created. The plugin re
 
 By combining permissions and commands, one can create the most fine-tuned game experience for a player. 
 
-PermClasses uses **permissions** to determine the actions of a player with a certain class. The player is added to a permission group in a Vault-supported plugin and inherits all of the properties of the group. PermClasses also uses **commands** to give a player traits. An example of this would be a class that teleports the player to another world, allowing the player to do more. These two can also be combined. Say you want a mage class to use a Heroes class. You would add the corresponding permission for the Heroes class and the command to actually give the class to the player. To unbind, remove the class.
+PermClasses uses **permissions** to determine the actions of a player with a certain class. The player is added to a permission group in a Vault-supported plugin and inherits all of the properties of the group. 
+
+PermClasses also uses **commands** to give a player traits. An example of this would be a class that teleports the player to another world, allowing the player to do more. 
+
+These two can also be **combined**. Say you want a mage class to use a Heroes class. You would add the corresponding permission for the Heroes class and the command to actually give the class to the player. To unbind, remove the class.
 
 Installation
 -----------
 
 Simply drag-and-drop the "PermClasses.jar" file into your server's plugin directory.
 
-### Configuration
+Configuration
+------------
 
 The configuration of PermClasses is stored in the **plugins/PermClasses/config.yml** file of your server.
 
@@ -41,6 +46,12 @@ As many tiers/types/classes as you want can be added to their parent. Bind and u
 
 Commands prefixed with a "/" will be sent by the player. Commands not prefixed will be sent by the console.
 
+### Adding Permissions to Classes
+
+PermClasses depends on 3rd party plugins to do a lot of its work. Personally, I recommend the unbelievably awesome [bPermissions](http://dev.bukkit.org/server-mods/bpermissions/), but you can use any Permissions plugin supported by [Vault](http://dev.bukkit.org/server-mods/vault/) that also supports groups.
+
+Permission groups must be named with a prefix of `_pcl_`. Their names must also be all lowercase, numbers, and hyphens. For example, if you had a class named "Warrior", your permission group would be named `_pcl_warrior`.
+
 Need help?
 -----------
 
@@ -59,6 +70,7 @@ Credits
 -----------
 
 [![simplyianm/AlbireoX](http://www.gravatar.com/avatar/9c5c3b395c30ab444a71bd0d52ddd73c.png "simplyianm")](http://simplyian.com/)
+
 [simplyianm](http://simplyian.com/) AKA [AlbireoX](http://forums.spout.org/members/albireox.482/)
 
 Donate (I have no job!)
