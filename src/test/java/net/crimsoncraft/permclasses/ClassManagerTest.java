@@ -31,11 +31,13 @@ import java.util.Map;
 import java.util.Set;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
@@ -138,6 +140,12 @@ public class ClassManagerTest {
         String[] groups = {"pcl_randy", "pcl_droid", "pcl_duplicate"};
         when(permAPI.getPlayerGroups(world, "AlbireoX")).thenReturn(groups);
         //End mock
+        
+        Server server = mock(Server.class);
+        PluginManager manager = mock(PluginManager.class);
+        when(Bukkit.getServer()).thenReturn(server);
+        when(Bukkit.getPluginManager()).thenReturn(manager);
+        when(server.getPluginManager()).thenReturn(manager);
 
         instance = new ClassManager(plugin);
     }
