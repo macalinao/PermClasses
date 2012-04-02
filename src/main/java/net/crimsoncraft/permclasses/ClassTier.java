@@ -24,6 +24,8 @@
 package net.crimsoncraft.permclasses;
 
 import java.util.*;
+import org.bukkit.Bukkit;
+import org.bukkit.permissions.Permission;
 
 /**
  * Represents a tier, or group, of classes.
@@ -51,6 +53,11 @@ public class ClassTier {
     private Map<ClassType, Set<PermClass>> classes = new HashMap<ClassType, Set<PermClass>>();
 
     /**
+     * The Permission of this tier.
+     */
+    private Permission permission;
+
+    /**
      * Constructor.
      *
      * @param cm The ClassManager.
@@ -60,6 +67,21 @@ public class ClassTier {
         this.classManager = cm;
         this.id = PermClasses.formatNameToId(name);
         this.name = name;
+    }
+
+    /**
+     * Gets the Permission corresponding with this ClassTier.
+     *
+     * @return The Permission corresponding with the ClassTier.
+     */
+    public Permission getPermission() {
+        String permName = "pcl.use." + getId();
+        if (permission == null || !permission.getName().equalsIgnoreCase(permName)) {
+            permission = new Permission(permName);
+            Bukkit.getPluginManager().addPermission(permission);
+        }
+
+        return permission;
     }
 
     /**

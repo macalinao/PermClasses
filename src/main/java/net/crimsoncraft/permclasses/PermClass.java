@@ -26,6 +26,7 @@ package net.crimsoncraft.permclasses;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 
 /**
  * Represents an immutable permission class.
@@ -60,12 +61,17 @@ public class PermClass {
     /**
      * The commands that will be executed when the class is bound.
      */
-    private final List<String> bindCmds;
+    private List<String> bindCmds;
 
     /**
      * The commands that will be executed when the class is unbound.
      */
-    private final List<String> unbindCmds;
+    private List<String> unbindCmds;
+
+    /**
+     * The permission that corresponds with this PermClass.
+     */
+    private Permission permission;
 
     /**
      * Constructor.
@@ -81,6 +87,25 @@ public class PermClass {
         this.name = name;
         this.bindCmds = bindCmds;
         this.unbindCmds = unbindCmds;
+    }
+
+    /**
+     * Gets the Permission corresponding with this PermClass.
+     * 
+     * @return The Permission of the PermClass.
+     */
+    public Permission getPermission() {
+        ClassTier tier = getTier();
+        String tierId = (tier == null) ? "default" : tier.getId();
+        String permName = "pcl.use." + tierId + "." + getId();
+
+        if (this.permission == null) {
+            permission = new Permission(permName);
+            permission.addParent(tier.getPermission(), true);
+            Bukkit.getPluginManager().addPermission(permission);
+        }
+
+        return permission;
     }
 
     /**

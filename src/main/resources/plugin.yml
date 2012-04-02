@@ -20,6 +20,7 @@ permissions:
       pcl.admin.set: true
       pcl.admin.rm: true
       pcl.admin.reload: true
+      pcl.use.*: true
       
   pcl.admin.set:
     description: Allows setting of a player's class.
@@ -29,3 +30,6 @@ permissions:
     
   pcl.admin.reload:
     description: Allows reloading of the plugin.
+    
+  pcl.use.*:
+    description: Allows the usage of all classes.

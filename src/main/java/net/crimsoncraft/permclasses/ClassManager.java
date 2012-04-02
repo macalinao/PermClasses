@@ -114,9 +114,9 @@ public class ClassManager {
                 }
 
                 for (String className : classNames) {
-                    PermClass pcl = tier.createClass(type, className,
+                    tier.createClass(type, className,
                             classSection.getStringList("bind"),
-                            classSection.getStringList("unbind"));
+                            classSection.getStringList("unbind")).getPermission();
                 }
             }
         }
