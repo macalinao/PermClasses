@@ -48,6 +48,15 @@ public class PclCommand implements CommandExecutor {
     }
 
     public void parseCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (args.length < 1) {
+            sender.sendMessage(ChatColor.RED + "Please specify an action: /pcl (set|rm|reset|reload).");
+            return;
+        }
+        
+        String action = args[0];
+        
+        if (action.equalsIgnoreCase("set")) {
+        }
     }
 
     /**

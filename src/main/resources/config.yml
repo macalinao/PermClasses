@@ -1,28 +1,64 @@
 classes:
   Tier 1:
     Economic:
-      - Prospector
-      - Handyman
-      - Demolisher
+      Prospector:
+        bind: []
+        unbind: []
+      Handyman:
+        bind: []
+        unbind: []
+      Demolisher:
+        bind: []
+        unbind: []
     Combat:
-      - Archer
-      - Warrior
-      - Axeman
+      Archer:
+        bind: []
+        unbind: []
+      Warrior:
+        bind: []
+        unbind: []
+      Axeman:
+        bind: []
+        unbind: []
   Tier 2:
     Economic:
-      - Mayor
-      - Merchant
-      - Engineer
+      Mayor:
+        bind: []
+        unbind: []
+      Merchant:
+        bind: []
+        unbind: []
+      Engineer:
+        bind: []
+        unbind: []
     Combat:
-      - Mage
-      - Paladin
-      - Hunter
+      Mage:
+        bind:
+          - "/hero join"
+      Paladin:
+        bind: []
+        unbind: []
+      Hunter:
+        bind: []
+        unbind: []
   Tier 3:
     Economic:
-      - Rider
-      - Politician
-      - CEO
+      Rider:
+        bind: []
+        unbind: []
+      Politician:
+        bind: []
+        unbind: []
+      CEO:
+        bind: []
+        unbind: []
     Combat:
-      - Survivalist
-      - Spartan
-      - Sorceror
+      Survivalist:
+        bind: []
+        unbind: []
+      Spartan:
+        bind: []
+        unbind: []
+      Sorceror:
+        bind: []
+        unbind: []
