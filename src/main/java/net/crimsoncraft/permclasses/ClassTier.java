@@ -126,10 +126,14 @@ public class ClassTier {
      *
      * @param type The {@link ClassType} to add.
      * @param className The name of the {@link PermClass} to create.
+     * @param bindCmds A list of commands to be executed when the class is
+     * bound.
+     * @param unbindCmds A list of commands to be executed when the class is
+     * unbound.
      * @return The created {@link PermClass}.
      */
-    public PermClass createClass(ClassType type, String className) {
-        PermClass pcl = classManager.createClass(className);
+    public PermClass createClass(ClassType type, String className, List<String> bindCmds, List<String> unbindCmds) {
+        PermClass pcl = classManager.createClass(className, bindCmds, unbindCmds);
         type.addClass(pcl);
         addClass(pcl);
         return pcl;

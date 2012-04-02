@@ -23,6 +23,8 @@
  */
 package net.crimsoncraft.permclasses;
 
+import com.google.common.collect.Lists;
+import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -59,7 +61,9 @@ public class PermClassTest {
         System.out.println("Testing the getId method.");
 
         ClassManager cm = mock(ClassManager.class);
-        PermClass instance = new PermClass(cm, "PermClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass", bindCmds, unbindCmds);
 
         String expected = "permclass";
         String result = instance.getId();
@@ -74,7 +78,9 @@ public class PermClassTest {
         System.out.println("Testing the getName method.");
 
         ClassManager cm = mock(ClassManager.class);
-        PermClass instance = new PermClass(cm, "PermClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass", bindCmds, unbindCmds);
 
         String expected = "PermClass";
         String result = instance.getName();
@@ -89,7 +95,9 @@ public class PermClassTest {
         System.out.println("Testing the getType method.");
 
         ClassManager cm = mock(ClassManager.class);
-        PermClass instance = new PermClass(cm, "PermClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass", bindCmds, unbindCmds);
 
         ClassType type = mock(ClassType.class);
         instance.setType(type);
@@ -107,7 +115,9 @@ public class PermClassTest {
         System.out.println("Testing the setType method.");
 
         ClassManager cm = mock(ClassManager.class);
-        PermClass instance = new PermClass(cm, "PermClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass", bindCmds, unbindCmds);
 
         ClassType type = mock(ClassType.class);
         instance.setType(type);
@@ -125,7 +135,9 @@ public class PermClassTest {
         System.out.println("Testing the getTier method.");
 
         ClassManager cm = mock(ClassManager.class);
-        PermClass instance = new PermClass(cm, "PermClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass", bindCmds, unbindCmds);
 
         ClassTier tier = mock(ClassTier.class);
         instance.setTier(tier);
@@ -143,7 +155,9 @@ public class PermClassTest {
         System.out.println("Testing the setTier method.");
 
         ClassManager cm = mock(ClassManager.class);
-        PermClass instance = new PermClass(cm, "PermClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass", bindCmds, unbindCmds);
 
         ClassTier tier = mock(ClassTier.class);
         instance.setTier(tier);
@@ -162,7 +176,9 @@ public class PermClassTest {
 
         ClassManager cm = mock(ClassManager.class);
         when(cm.getGroupPrefix()).thenReturn("pcl_");
-        PermClass instance = new PermClass(cm, "PermClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass", bindCmds, unbindCmds);
 
         String expected = "pcl_permclass";
         String result = instance.getGroup();
@@ -178,7 +194,9 @@ public class PermClassTest {
 
         ClassManager cm = mock(ClassManager.class);
         when(cm.getGroupPrefix()).thenReturn("pcl_");
-        PermClass instance = new PermClass(cm, "PermClass With Spaces");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass With Spaces", bindCmds, unbindCmds);
 
         String expected = "pcl_permclass-with-spaces";
         String result = instance.getGroup();
@@ -194,7 +212,9 @@ public class PermClassTest {
 
         ClassManager cm = mock(ClassManager.class);
         when(cm.getGroupPrefix()).thenReturn("pcl_");
-        PermClass instance = new PermClass(cm, "PermClass_under_scores");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass_under_scores", bindCmds, unbindCmds);
 
         String expected = "pcl_permclass-under-scores";
         String result = instance.getGroup();
@@ -210,7 +230,9 @@ public class PermClassTest {
 
         ClassManager cm = mock(ClassManager.class);
         when(cm.getGroupPrefix()).thenReturn("pcl_");
-        PermClass instance = new PermClass(cm, "PermClass with spaces_and under_s_c_rASdasda_");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass instance = new PermClass(cm, "PermClass with spaces_and under_s_c_rASdasda_", bindCmds, unbindCmds);
 
         String expected = "pcl_permclass-with-spaces-and-under-s-c-rasdasda-";
         String result = instance.getGroup();

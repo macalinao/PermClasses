@@ -23,7 +23,9 @@
  */
 package net.crimsoncraft.permclasses;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import java.util.List;
 import java.util.Set;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -81,7 +83,9 @@ public class ClassTierTest {
         Set<ClassType> types = Sets.newHashSet(ct);
         when(cm.getClassTypes()).thenReturn(types);
 
-        PermClass pcl = new PermClass(cm, "MyClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass pcl = new PermClass(cm, "MyClass", bindCmds, unbindCmds);
         ct.addClass(pcl);
         Set<PermClass> classes = Sets.newHashSet(pcl);
 
@@ -102,7 +106,9 @@ public class ClassTierTest {
         Set<ClassType> types = Sets.newHashSet(ct);
         when(cm.getClassTypes()).thenReturn(types);
 
-        PermClass pcl = new PermClass(cm, "MyClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass pcl = new PermClass(cm, "MyClass", bindCmds, unbindCmds);
         ct.addClass(pcl);
         Set<PermClass> classes = Sets.newHashSet(pcl);
 
@@ -121,7 +127,9 @@ public class ClassTierTest {
         ClassType ct = mock(ClassType.class);
 
         ClassTier instance = new ClassTier(cm, "My Id");
-        PermClass created = instance.createClass(ct, "Explorer");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass created = instance.createClass(ct, "Explorer", bindCmds, unbindCmds);
 
         verify(ct).addClass(created);
 
@@ -142,9 +150,13 @@ public class ClassTierTest {
         Set<ClassType> types = Sets.newHashSet(ct);
         when(cm.getClassTypes()).thenReturn(types);
 
-        PermClass myClass = new PermClass(cm, "MyClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass myClass = new PermClass(cm, "MyClass", bindCmds, unbindCmds);
         ct.addClass(myClass);
-        PermClass newClass = new PermClass(cm, "NewClass");
+        List<String> bindCmds2 = Lists.newArrayList("/hero bind2");
+        List<String> unbindCmds2 = Lists.newArrayList("/my cmd2", "/other cmd2", "console cmd2");
+        PermClass newClass = new PermClass(cm, "NewClass", bindCmds2, unbindCmds2);
         ct.addClass(newClass);
 
         ClassTier instance = new ClassTier(cm, "MyTier");

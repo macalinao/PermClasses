@@ -23,6 +23,10 @@
  */
 package net.crimsoncraft.permclasses;
 
+import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 /**
  * Represents an immutable permission class.
  */
@@ -54,6 +58,16 @@ public class PermClass {
     private ClassTier tier;
 
     /**
+     * The commands that will be executed when the class is bound.
+     */
+    private final List<String> bindCmds;
+
+    /**
+     * The commands that will be executed when the class is unbound.
+     */
+    private final List<String> unbindCmds;
+
+    /**
      * Constructor.
      *
      * @param classManager The {@link ClassManager}.
@@ -61,10 +75,12 @@ public class PermClass {
      * @param name The name of the class.
      * @param type The type of the class.
      */
-    public PermClass(ClassManager classManager, String name) {
+    public PermClass(ClassManager classManager, String name, List<String> bindCmds, List<String> unbindCmds) {
         this.classManager = classManager;
         this.id = PermClasses.formatNameToId(name);
         this.name = name;
+        this.bindCmds = bindCmds;
+        this.unbindCmds = unbindCmds;
     }
 
     /**
@@ -134,6 +150,26 @@ public class PermClass {
      */
     public String getGroup() {
         return new StringBuilder(classManager.getGroupPrefix()).append(getId()).toString();
+    }
+
+    public void bind(Player player) {
+        for (String cmd : bindCmds) {
+            if (cmd.startsWith("/")) {
+                player.chat(cmd);
+            } else {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+            }
+        }
+    }
+
+    public void unbind(Player player) {
+        for (String cmd : unbindCmds) {
+            if (cmd.startsWith("/")) {
+                player.chat(cmd);
+            } else {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+            }
+        }
     }
 
     @Override

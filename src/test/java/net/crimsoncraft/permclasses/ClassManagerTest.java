@@ -25,7 +25,6 @@ package net.crimsoncraft.permclasses;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +32,10 @@ import java.util.Set;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
@@ -90,11 +91,16 @@ public class ClassManagerTest {
         Set<String> keys1 = Sets.newHashSet("Combat", "Economic");
         when(tier1Section.getKeys(false)).thenReturn(keys1);
 
-        List<String> combat1 = Lists.newArrayList("rettata", "Migaaa", "Afforess");
-        List<String> economic1 = Lists.newArrayList("sadfac", "asdasd", "Duplicate");
+        ConfigurationSection combat1Section = mock(ConfigurationSection.class);
+        Set<String> combat1 = Sets.newHashSet("rettata", "Migaaa", "Afforess");
+        when(combat1Section.getKeys(false)).thenReturn(combat1);
 
-        when(tier1Section.getStringList("Combat")).thenReturn(combat1);
-        when(tier1Section.getStringList("Economic")).thenReturn(economic1); //case-i
+        ConfigurationSection economic1Section = mock(ConfigurationSection.class);
+        Set<String> economic1 = Sets.newHashSet("sadfac", "asdasd", "Duplicate");
+        when(economic1Section.getKeys(false)).thenReturn(economic1);
+
+        when(tier1Section.getConfigurationSection("Combat")).thenReturn(combat1Section);
+        when(tier1Section.getConfigurationSection("Economic")).thenReturn(economic1Section); //case-i
 
         //Tier 2
         ConfigurationSection tier2Section = mock(ConfigurationSection.class);
@@ -104,13 +110,21 @@ public class ClassManagerTest {
         Set<String> keys2 = Sets.newHashSet("Combat", "ecoNOMIC", "Random");
         when(tier2Section.getKeys(false)).thenReturn(keys2);
 
-        List<String> combat2 = Lists.newArrayList("Archer", "Uber", "Droid");
-        List<String> economic2 = Lists.newArrayList("Mayor", "Loser", "DupLICate");
-        List<String> random2 = Lists.newArrayList("Randy", "ran_do N", "R anasas");
+        ConfigurationSection combat2Section = mock(ConfigurationSection.class);
+        Set<String> combat2 = Sets.newHashSet("Archer", "Uber", "Droid");
+        when(combat2Section.getKeys(false)).thenReturn(combat2);
 
-        when(tier2Section.getStringList("Combat")).thenReturn(combat2);
-        when(tier2Section.getStringList("ecoNOMIC")).thenReturn(economic2); //case-i
-        when(tier2Section.getStringList("Random")).thenReturn(random2);
+        ConfigurationSection economic2Section = mock(ConfigurationSection.class);
+        Set<String> economic2 = Sets.newHashSet("Mayor", "Loser", "DupLICate");
+        when(economic2Section.getKeys(false)).thenReturn(economic2);
+
+        ConfigurationSection random2Section = mock(ConfigurationSection.class);
+        Set<String> random2 = Sets.newHashSet("Randy", "ran_do N", "R anasas");
+        when(random2Section.getKeys(false)).thenReturn(random2);
+
+        when(tier2Section.getConfigurationSection("Combat")).thenReturn(combat2Section);
+        when(tier2Section.getConfigurationSection("ecoNOMIC")).thenReturn(economic2Section); //case-i
+        when(tier2Section.getConfigurationSection("Random")).thenReturn(random2Section);
         //End config mock
 
         //Mock player groups
@@ -160,7 +174,9 @@ public class ClassManagerTest {
     public void testCreateClass() {
         System.out.println("Testing the createClass method.");
 
-        PermClass pcl = instance.createClass("MyClass");
+        List<String> bindCmds = Lists.newArrayList("/hero bind");
+        List<String> unbindCmds = Lists.newArrayList("/my cmd", "/other cmd", "console cmd");
+        PermClass pcl = instance.createClass("MyClass", bindCmds, unbindCmds);
 
         String expected = "MyClass";
         String result = pcl.getName();
@@ -169,6 +185,22 @@ public class ClassManagerTest {
         expected = "myclass";
         result = pcl.getId();
         assertEquals(expected, result);
+        
+        Player player = mock(Player.class);
+        pcl.bind(player);
+        
+        verify(player).chat("/hero bind");
+        
+        ConsoleCommandSender sender = mock(ConsoleCommandSender.class);
+        when(Bukkit.getConsoleSender()).thenReturn(sender);
+        
+        pcl.unbind(player);
+        
+        verify(player).chat("/my cmd");
+        verify(player).chat("/other cmd");
+        
+        PowerMockito.verifyStatic();
+        Bukkit.dispatchCommand(sender, "console cmd");
     }
 
     /**

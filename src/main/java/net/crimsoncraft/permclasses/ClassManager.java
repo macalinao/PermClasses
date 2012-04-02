@@ -99,7 +99,13 @@ public class ClassManager {
             ConfigurationSection tierSection = classesSection.getConfigurationSection(tier.getName());
 
             for (String typeName : tierSection.getKeys(false)) {
-                List<String> classNames = tierSection.getStringList(typeName);
+                
+                ConfigurationSection classSection = tierSection.getConfigurationSection(typeName);
+                if (classSection == null) {
+                    classSection = tierSection.createSection(typeName);
+                }
+                
+                Set<String> classNames = classSection.getKeys(false);
 
                 ClassType type = getClassType(PermClasses.formatNameToId(typeName));
                 if (type == null) {
@@ -108,7 +114,9 @@ public class ClassManager {
                 }
 
                 for (String className : classNames) {
-                    tier.createClass(type, className);
+                    PermClass pcl = tier.createClass(type, className,
+                            classSection.getStringList("bind"),
+                            classSection.getStringList("unbind"));
                 }
             }
         }
@@ -118,11 +126,13 @@ public class ClassManager {
      * Creates a class.
      *
      * @param name The name of the {@link PermClass}.
+     * @param bindCmds A list of commands to be executed when the class is bound.
+     * @param unbindCmds A list of commands to be executed when the class is unbound.
      * @return The {@link PermClass} created.
      */
-    public PermClass createClass(String name) {
+    public PermClass createClass(String name, List<String> bindCmds, List<String> unbindCmds) {
         String pid = PermClasses.formatNameToId(name);
-        PermClass pcl = new PermClass(this, name);
+        PermClass pcl = new PermClass(this, name, bindCmds, unbindCmds);
         classes.put(pcl.getId(), pcl);
         classesToGroups.put(pcl.getGroup(), pcl);
         return pcl;
