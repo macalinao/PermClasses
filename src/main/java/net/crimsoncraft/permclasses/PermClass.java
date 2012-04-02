@@ -152,7 +152,13 @@ public class PermClass {
         return new StringBuilder(classManager.getGroupPrefix()).append(getId()).toString();
     }
 
+    /**
+     * Binds this PermClass to the specified player.
+     *
+     * @param player The player to bind this class to.
+     */
     public void bind(Player player) {
+        this.classManager.setClass(player.getName(), this);
         for (String cmd : bindCmds) {
             if (cmd.startsWith("/")) {
                 player.chat(cmd);
@@ -162,7 +168,13 @@ public class PermClass {
         }
     }
 
+    /**
+     * Unbinds this PermClass from the specified player.
+     *
+     * @param player The player to unbind this class from.
+     */
     public void unbind(Player player) {
+        this.classManager.resetClass(player.getName(), getType());
         for (String cmd : unbindCmds) {
             if (cmd.startsWith("/")) {
                 player.chat(cmd);
