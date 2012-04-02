@@ -1,11 +1,11 @@
 PermClasses
 ===========
-***Classes. Your way.***
+Flexible class system for Bukkit.
 
 What is PermClasses?
 -----------
 
-**PermClasses** is a Bukkit plugin intended to provide a class system without sacrificing content. 
+**PermClasses** is a Bukkit plugin intended to provide a class system without being limited to a specific plugin's implementation of the concept. 
 
 PermClasses allows _extremely_ customizable classes to be created. The plugin relies on two things:
 
